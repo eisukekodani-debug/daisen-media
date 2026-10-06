@@ -1,4 +1,4 @@
-# もうひとつの議会 だいせん（仮称）
+# かってに議会だより
 
 鳥取県大山町の議会の議案を、賛成・反対の両方から解説する地域ウェブメディア。設計は Googleドライブ `政治活動/地域ウェブメディア/サイト設計書` を参照。
 
@@ -10,7 +10,7 @@
 ## 公開
 - `main` に push すると GitHub Actions がビルド・点検して GitHub Pages に公開する
 - リポジトリの Variables で設定する値
-  - `SITE_URL`：公開するURL（例 `https://mouhitotsu-gikai.com`）
+  - `SITE_URL`：公開するURL（`https://katteni-dayori.com`）
   - `BASE_PATH`：独自ドメインなら `/`。github.io のプロジェクトページで試すときは `/リポジトリ名/`
   - `PUBLIC_NOINDEX`：公開日まで `1`（検索よけ）。公開の朝に `0` にする
 
