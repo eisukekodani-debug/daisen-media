@@ -14,7 +14,7 @@ const { title, description = SITE.description, noindex = false, ogImage = '/ogp.
 // 公開日まで検索よけ（PUBLIC_NOINDEX=0 で外す）
 const globalNoindex = (import.meta.env.PUBLIC_NOINDEX ?? '1') !== '0';
 const ogImageUrl = new URL(u(ogImage), Astro.site).toString();
-const siteName = `${SITE.name} ${SITE.nameSub}`;
+const siteName = SITE.name;
 const homeUrl = new URL(u('/'), Astro.site).toString();
 const jsonld = article
   ? {
@@ -27,8 +27,8 @@ const jsonld = article
     ? { '@context': 'https://schema.org', '@type': 'WebSite', name: siteName, url: homeUrl, inLanguage: 'ja' }
     : null;
 const fullTitle = title
-  ? `${title}｜${SITE.name} ${SITE.nameSub}`
-  : `${SITE.name} ${SITE.nameSub}｜鳥取県大山町の議案を賛成・反対の両方から`;
+  ? `${title}｜${SITE.name}`
+  : `${SITE.name}｜鳥取県大山町の議案を賛成・反対の両方から`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!doctype html>
@@ -50,7 +50,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:locale" content="ja_JP" />
-  <meta property="og:site_name" content={`${SITE.name} ${SITE.nameSub}`} />
+  <meta property="og:site_name" content={SITE.name} />
   <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,7 +64,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <div class="hikoshiki"><a href={u('/about/')}>{SITE.notOfficial}</a></div>
   <header class="site-header">
     <div>
-      <p class="daiji"><a href={u('/')}>{SITE.name}<small>{SITE.nameSub}</small></a></p>
+      <p class="daiji"><a href={u('/')}>{SITE.name}</a></p>
       <div class="futasuji"></div>
       <p class="fukudai">{SITE.subtitle}</p>
     </div>
@@ -89,13 +89,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <footer class="site-footer">
     <div class="futasuji"></div>
     <div class="inner">
-      <p><b>{SITE.name} {SITE.nameSub}</b><br />{SITE.subtitle}</p>
+      <p><b>{SITE.name}</b><br />{SITE.subtitle}</p>
       <p>このサイトは、{SITE.notOfficial}。運営：{SITE.operator}（{SITE.operatorTitle}）の政治活動として運営しています。広告・寄付は受けていません。</p>
       <p>このサイトへのお問い合わせは運営者へ（<a href={u('/contact/')}>お問い合わせ</a>／{SITE.contactEmail}）。大山町議会事務局では、このサイトについてはお答えできません。議会の公式な情報は、<a href={SITE.officialGikaiUrl}>大山町議会のページ</a>をご覧ください。</p>
       <nav aria-label="フッター">
         <a href={u('/policy/')}>運営方針</a>｜<a href={u('/rules/')}>お約束と投稿のルール</a>｜<a href={u('/privacy/')}>プライバシー</a>｜<a href={u('/contact/')}>お問い合わせ</a>｜<a href={u('/line/')}>お知らせ登録</a>
       </nav>
-      <p style="margin-top:12px">© 2026 {SITE.name} {SITE.nameSub}</p>
+      <p style="margin-top:12px">© 2026 {SITE.name}</p>
     </div>
   </footer>
 
