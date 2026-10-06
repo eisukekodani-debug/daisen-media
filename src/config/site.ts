@@ -8,8 +8,8 @@ export const SITE = {
   operator: '小谷英介',
   operatorTitle: '元大山町議会議員',
   // 公開前に差し替える
-  contactEmail: '〔準備中〕',
-  questionFormUrl: '#',
+  contactEmail: 'kodani.policy@gmail.com',
+  questionFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdUwtcUlozsJidSxWqXoo9-XFHrKQ-KYZTJ6tX3UlIIOf-UlA/viewform',
   lineUrl: '',
   officialGikaiUrl: 'https://www.daisen.jp/gikai/',
 };
