@@ -1,0 +1,21 @@
+---
+// 横棒グラフ。注目する棒だけ墨、ほかは灰（スライドと同じ作法）
+interface Item { label: string; value: number; display?: string; hi?: boolean; sub?: string }
+interface Props { title: string; items: Item[]; unit?: string; max?: number; note?: string; caption?: string }
+const { title, items, unit = '', max, note, caption } = Astro.props;
+const m = max ?? Math.max(...items.map((i) => i.value));
+---
+<figure class="chart">
+  <figcaption class="chart-title">{title}</figcaption>
+  {caption && <p class="chart-lead">{caption}</p>}
+  <ul class="hbar" role="list">
+    {items.map((i) => (
+      <li class={i.hi ? 'hi' : ''}>
+        <span class="lab">{i.label}{i.sub && <small>{i.sub}</small>}</span>
+        <span class="track"><span class="fill" style={`width:${(i.value / m) * 100}%`}></span></span>
+        <span class="val">{i.display ?? i.value.toLocaleString('ja-JP')}{unit}</span>
+      </li>
+    ))}
+  </ul>
+  {note && <p class="chart-note">{note}</p>}
+</figure>

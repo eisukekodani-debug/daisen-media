@@ -1,0 +1,21 @@
+---
+// 委員会の形：丸で人数を見せる
+const rows = [
+  { teisu: 16, a: 8, b: 8, label: '16人（いま）' },
+  { teisu: 14, a: 7, b: 7, label: '14人' },
+  { teisu: 12, a: 6, b: 6, label: '12人' },
+];
+---
+<figure class="chart">
+  <figcaption class="chart-title">議案を審査する2つの委員会は、何人ずつになるか</figcaption>
+  <div class="seats">
+    {rows.map((r) => (
+      <div class={`seatrow ${r.teisu === 14 ? 'hi' : ''}`}>
+        <div class="seatlab">{r.label}</div>
+        <div class="seatcom"><span class="cn">総務経済</span><span class="dots">{Array.from({ length: r.a }).map(() => <i></i>)}</span><span class="num">{r.a}人</span></div>
+        <div class="seatcom"><span class="cn">教育民生</span><span class="dots">{Array.from({ length: r.b }).map(() => <i></i>)}</span><span class="num">{r.b}人</span></div>
+      </div>
+    ))}
+  </div>
+  <p class="chart-note">議長も委員として入る、いまの大山町議会の運用のまま、委員会をかけ持ちせずに組んだ場合。研究者の目安は「1委員会7〜8人」、ただし「議論できる人数として6人は下らないのではないだろうか」（全国町村議会議長会『町村議会議員の議員報酬等のあり方 最終報告』2019年）。</p>
+</figure>

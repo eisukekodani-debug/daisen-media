@@ -1,0 +1,17 @@
+---
+interface Step { t: string; d: string; when?: string }
+interface Props { title: string; steps: Step[]; note?: string }
+const { title, steps, note } = Astro.props;
+---
+<figure class="chart">
+  <figcaption class="chart-title">{title}</figcaption>
+  <ol class="flow">
+    {steps.map((s, i) => (
+      <li>
+        <span class="no">{i + 1}</span>
+        <div><b>{s.t}</b>{s.when && <span class="when">{s.when}</span>}<p>{s.d}</p></div>
+      </li>
+    ))}
+  </ol>
+  {note && <p class="chart-note">{note}</p>}
+</figure>

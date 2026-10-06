@@ -1,0 +1,214 @@
+/* ふたすじの紙面：色・書体・部品の共通スタイル（設計書 2章・6章） */
+:root {
+  --kami: #FAF8F3;     /* 紙（地） */
+  --men: #FFFFFF;      /* 面（白） */
+  --kairan: #EADFCB;   /* 回覧板（参加欄） */
+  --kiri: #F1EEE7;     /* 霧（区切りの面） */
+  --sumi: #222222;     /* 墨 */
+  --usuzumi: #595959;  /* 薄墨 */
+  --kei: #D6D0C3;      /* 罫 */
+  --waku: #857B6D;     /* 入力枠 */
+  --sansei: #3F6274;   /* 賛成＝日本海 */
+  --hantai: #7E5536;   /* 反対＝田の土 */
+  --mada: #76766F;     /* まだ＝霧の灰 */
+  --mincho: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --gothic: "Zen Kaku Gothic New", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --base: 18px;
+  color-scheme: light;
+}
+html.big { --base: 22px; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--kami); color: var(--sumi);
+  font-family: var(--gothic); font-weight: 500; font-size: var(--base);
+  line-height: 1.85; letter-spacing: .02em;
+  line-break: strict; overflow-wrap: anywhere;
+}
+a { color: var(--sumi); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--sumi); outline-offset: 2px; }
+p { margin: 0 0 1em; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* 子持ち罫（太い線＝議会、細い線＝町民の声） */
+.futasuji {
+  height: 6px; border: 0; margin: 0;
+  background:
+    linear-gradient(var(--sumi), var(--sumi)) top / 100% 3px no-repeat,
+    linear-gradient(var(--sumi), var(--sumi)) bottom / 100% 1px no-repeat;
+}
+
+/* 枠組み */
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.wide { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+/* 非公式の帯 */
+.hikoshiki { background: var(--kiri); border-bottom: 1px solid var(--kei); font-size: 15px; line-height: 1.5; }
+.hikoshiki a { display: block; padding: 8px 20px; max-width: 960px; margin: 0 auto; text-decoration: none; }
+
+/* ヘッダー */
+.site-header { max-width: 960px; margin: 0 auto; padding: 14px 16px 6px 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+@media (min-width: 768px) { .daiji { font-size: 24px; } }
+.daiji { font-family: var(--mincho); font-weight: 800; font-size: 19px; line-height: 1.2; margin: 0; white-space: nowrap; }
+.daiji a { text-decoration: none; }
+.daiji small { font-size: 1em; margin-left: .3em; }
+.site-header .futasuji { margin-top: 6px; }
+.fukudai { font-size: 15px; color: var(--usuzumi); line-height: 1.5; margin: 6px 0 0; }
+.tbtn {
+  white-space: nowrap;
+  font: 700 15px/1.2 var(--gothic); min-height: 48px; min-width: 48px; padding: 4px 8px; flex-shrink: 0;
+  background: var(--men); border: 1.5px solid var(--sumi); border-radius: 4px; color: var(--sumi); cursor: pointer;
+}
+.menu { display: none; max-width: 960px; margin: 0 auto; padding: 0 20px 12px; }
+.menu.open { display: block; }
+.menu ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--kei); }
+.menu li a, .menu li button { display: flex; align-items: center; min-height: 52px; border-bottom: 1px solid var(--kei); text-decoration: none; font-size: var(--base); width: 100%; background: none; border-left: 0; border-right: 0; border-top: 0; font-family: var(--gothic); font-weight: 700; color: var(--sumi); cursor: pointer; padding: 0; text-align: left; }
+
+/* 記事の頭 */
+.go { font-size: 16px; color: var(--usuzumi); margin: 28px 0 8px; }
+h1.title { font-family: var(--mincho); font-weight: 700; font-size: 27px; line-height: 1.4; margin: 10px 0 8px; word-break: auto-phrase; text-wrap: balance; }
+.byline { font-size: 16px; color: var(--usuzumi); margin: 0 0 18px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+@media (min-width: 768px) {
+  body { font-size: calc(var(--base) + 1px); }
+  h1.title { font-size: 38px; }
+}
+
+/* おことわり */
+.kotowari { background: var(--men); border-left: 4px solid var(--sumi); padding: 12px 16px; margin: 0 0 18px; font-size: 16px; line-height: 1.75; }
+.kotowari b { display: block; font-size: 15px; }
+.kakunin { font-size: 15px; color: var(--usuzumi); margin: -6px 0 20px; }
+
+/* 1分でわかるカード */
+.card { background: var(--men); border: 1px solid var(--sumi); padding: 0 18px 18px; margin: 0 0 28px; }
+.card > .futasuji { margin: 0 -18px 14px; }
+.fuda { display: inline-block; background: var(--sumi); color: #fff; font-weight: 700; font-size: 15px; padding: 2px 10px; margin-bottom: 10px; }
+.state { font-size: 16px; margin: 0 0 8px; }
+.sum { list-style: none; margin: 0 0 16px; padding: 0; }
+.sum li { font-size: calc(var(--base) * 1.02); line-height: 1.6; padding: 8px 0; border-top: 1px solid var(--kei); }
+.sum li span { display: block; font-size: 15px; color: var(--usuzumi); line-height: 1.4; }
+@media (min-width: 600px) { .sum li { display: grid; grid-template-columns: 5.4em 1fr; gap: 8px; } .sum li span { padding-top: 3px; } }
+.pbtn { display: flex; justify-content: center; align-items: center; width: 100%; font: 700 18px/1.3 var(--gothic); min-height: 56px; background: var(--sumi); color: #fff; border: 0; border-radius: 4px; text-decoration: none; cursor: pointer; padding: 8px 12px; text-align: center; }
+.sbtn { display: flex; justify-content: center; align-items: center; width: 100%; font: 700 17px/1.3 var(--gothic); min-height: 52px; background: var(--men); color: var(--sumi); border: 1.5px solid var(--sumi); border-radius: 4px; text-decoration: none; padding: 8px 12px; text-align: center; }
+.yakusoku { font-size: 16px; line-height: 1.7; margin: 12px 0 0; }
+
+/* 見出しごとに開く本文 */
+details.fold { border-top: 1px solid var(--kei); }
+details.fold > summary {
+  font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.15); line-height: 1.45;
+  min-height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; padding: 8px 0;
+}
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::after { content: "開く ＋"; font: 700 15px var(--gothic); white-space: nowrap; flex-shrink: 0; }
+details.fold[open] > summary::after { content: "閉じる －"; }
+details.fold > .body { padding: 2px 0 20px; }
+.allopen { margin: 0 0 8px; }
+.allopen button { font: 700 15px var(--gothic); background: none; border: 0; text-decoration: underline; cursor: pointer; padding: 8px 0; color: var(--sumi); }
+h3 { font-size: calc(var(--base) * 1.05); font-weight: 700; line-height: 1.5; margin: 22px 0 8px; }
+.note { font-size: 16px; color: var(--usuzumi); line-height: 1.7; }
+
+/* 3つの考え方 */
+.stances { display: grid; gap: 18px; margin: 8px 0 6px; }
+@media (min-width: 900px) { .stances.three { grid-template-columns: repeat(3, 1fr); } }
+.stance { border-top: 4px solid var(--sumi); padding-top: 8px; }
+.stance h3 { margin: 0 0 6px; font-family: var(--mincho); font-size: calc(var(--base) * 1.15); }
+.stance ul { margin: 0; padding-left: 1.2em; }
+.stance li { margin: 0 0 6px; }
+
+/* 検証 */
+.kensho { counter-reset: k; list-style: none; padding: 0; margin: 0; }
+.kensho > li { border-top: 1px solid var(--kei); padding: 12px 0; }
+.kensho > li > b { display: block; margin-bottom: 4px; }
+.kensho .src { font-size: 15px; color: var(--usuzumi); display: block; margin-top: 4px; }
+
+/* 表 */
+table.data { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.5; margin: 8px 0 6px; font-variant-numeric: tabular-nums; }
+table.data th, table.data td { border-bottom: 1px solid var(--kei); padding: 8px 6px; text-align: left; vertical-align: top; }
+table.data th { font-weight: 700; }
+table.data td.n { text-align: right; white-space: nowrap; }
+
+/* 私はこう見る（意見の欄） */
+.iken { background: var(--men); border: 2px solid var(--sumi); margin: 28px 0; }
+.iken .obi { background: var(--sumi); color: #fff; padding: 9px 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.iken .obi b { font-family: var(--mincho); font-weight: 700; font-size: 20px; }
+.iken .obi span { font-size: 14px; }
+.iken .ikenbody { padding: 14px 16px 16px; }
+.sign { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--usuzumi); border-top: 1px solid var(--kei); padding-top: 12px; line-height: 1.6; }
+.face { width: 44px; height: 44px; border-radius: 50%; background: #CFC8BA; flex-shrink: 0; display: grid; place-items: center; font-size: 11px; color: #fff; }
+
+/* 元の資料 */
+.sources { list-style: none; padding: 0; margin: 0; font-size: 16px; line-height: 1.6; }
+.sources li { border-top: 1px solid var(--kei); padding: 10px 0; }
+.sources .kind { display: inline-block; border: 1px solid var(--sumi); font-size: 14px; padding: 0 6px; margin-right: 8px; }
+
+/* 運営者の活動の枠 */
+.katsudo { background: var(--kiri); border: 1.5px dashed var(--usuzumi); padding: 14px 16px; margin: 28px 0; font-size: 16px; line-height: 1.75; }
+.katsudo b { display: block; margin-bottom: 4px; }
+
+/* 参加欄 */
+.kairan { background: var(--kairan); padding: 18px; margin: 28px 0; }
+.kairan h2 { font-family: var(--mincho); font-size: calc(var(--base) * 1.2); margin: 0 0 8px; }
+
+/* トップ */
+.hero { padding: 26px 0 8px; }
+.hero p { font-size: calc(var(--base) * 1.05); }
+.feature { background: var(--men); border: 1px solid var(--sumi); padding: 0 18px 18px; margin: 18px 0 28px; display: block; text-decoration: none; }
+.feature > .futasuji { margin: 0 -18px 12px; }
+.feature .t { font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.35); line-height: 1.45; margin: 4px 0 8px; display: block; }
+.steps { list-style: none; padding: 0; margin: 10px 0 0; counter-reset: s; }
+.steps li { border-left: 1px solid var(--sumi); padding: 0 0 14px 18px; position: relative; }
+.steps li::before { counter-increment: s; content: counter(s); position: absolute; left: -12px; top: 0; width: 24px; height: 24px; background: var(--kami); border: 1px solid var(--sumi); border-radius: 50%; font-size: 14px; line-height: 22px; text-align: center; font-weight: 700; }
+.steps li:last-child { border-left-color: transparent; }
+h2.sec { font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.25); line-height: 1.45; margin: 40px 0 12px; }
+h2.sec::before { content: ""; display: block; height: 6px; margin-bottom: 12px; background: linear-gradient(var(--sumi), var(--sumi)) top / 100% 3px no-repeat, linear-gradient(var(--sumi), var(--sumi)) bottom / 100% 1px no-repeat; }
+
+/* フッター */
+.site-footer { background: var(--kiri); margin-top: 48px; font-size: 15px; line-height: 1.75; }
+.site-footer .inner { max-width: 960px; margin: 0 auto; padding: 18px 20px 32px; }
+.site-footer p { margin: 0 0 10px; }
+.site-footer nav a { margin-right: 4px; }
+
+/* グラフと図 */
+.chart { margin: 22px 0 26px; padding: 16px; background: var(--men); border: 1px solid var(--kei); }
+.chart-title { font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.08); line-height: 1.45; margin: 0 0 6px; }
+.chart-lead { font-size: 16px; margin: 0 0 10px; }
+.chart-note { font-size: 14.5px; color: var(--usuzumi); line-height: 1.6; margin: 10px 0 0; }
+.hbar { list-style: none; margin: 8px 0 0; padding: 0; }
+.hbar li { display: grid; grid-template-columns: 7.2em 1fr 4.8em; gap: 8px; align-items: center; padding: 4px 0; font-size: 15px; line-height: 1.3; }
+.hbar .lab small { display: block; font-size: 12.5px; color: var(--usuzumi); }
+.hbar .track { background: #EFEBE3; height: 18px; display: block; }
+.hbar .fill { background: #C9C2B5; height: 18px; display: block; }
+.hbar .val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.hbar li.hi .fill { background: var(--sumi); }
+.hbar li.hi .lab { font-weight: 700; }
+.seats { display: grid; gap: 14px; margin-top: 10px; }
+.seatrow { border-top: 1px solid var(--kei); padding-top: 10px; }
+.seatrow.hi .seatlab { background: var(--sumi); color: #fff; display: inline-block; padding: 0 8px; }
+.seatlab { font-weight: 700; margin-bottom: 4px; }
+.seatcom { display: grid; grid-template-columns: 4.6em 1fr 2.6em; gap: 8px; align-items: center; font-size: 15px; }
+.seatcom .dots { display: flex; flex-wrap: wrap; gap: 4px; }
+.seatcom i { width: 16px; height: 16px; border-radius: 50%; background: var(--sumi); display: block; }
+.seatrow:not(.hi) .seatcom i { background: #9C958A; }
+.seatcom .num { text-align: right; font-weight: 700; }
+.flow { list-style: none; margin: 10px 0 0; padding: 0; }
+.flow li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 0 0 12px; position: relative; }
+.flow li:not(:last-child)::after { content: ""; position: absolute; left: 16px; top: 34px; bottom: 0; width: 1.5px; background: var(--sumi); }
+.flow .no { width: 34px; height: 34px; border: 1.5px solid var(--sumi); border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--kami); }
+.flow b { font-size: calc(var(--base) * 1.0); }
+.flow .when { display: inline-block; margin-left: 8px; font-size: 14px; background: var(--kairan); padding: 0 6px; }
+.flow p { margin: 2px 0 0; font-size: 16px; line-height: 1.6; }
+.cols4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; align-items: end; margin-top: 10px; }
+.cols4 .c { display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; text-align: center; }
+.cols4 .bar { background: #C9C2B5; }
+.cols4 .c.hi .bar { background: var(--sumi); }
+.cols4 .v { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+.cols4 .l { font-size: 13.5px; line-height: 1.35; margin-top: 4px; min-height: 2.7em; }
+.big-num { font-family: var(--mincho); font-weight: 800; font-size: 34px; line-height: 1.1; }
+.timeline4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; text-align: center; }
+.timeline4 > div { border-top: 3px solid var(--sumi); padding-top: 6px; }
+.timeline4 .y { font-size: 14px; color: var(--usuzumi); line-height: 1.3; }
+.timeline4 .n { font-family: var(--mincho); font-weight: 800; font-size: 30px; line-height: 1.2; }
+.timeline4 .n small { font-size: 15px; }
+.cmp { width: 100%; border-collapse: collapse; font-size: 15.5px; line-height: 1.5; margin-top: 8px; }
+.cmp th, .cmp td { border-bottom: 1px solid var(--kei); padding: 8px 6px; text-align: left; vertical-align: top; }
+.cmp thead th { border-bottom: 2px solid var(--sumi); }
+.cmp td.em { font-weight: 700; }

@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config/site';
+---
+<Base title="お問い合わせ" description="このサイトへのお問い合わせ。公式サイトではありません。">
+  <article class="wrap">
+    <div class="futasuji" style="margin-top:28px"></div>
+    <h1 class="title">お問い合わせ</h1>
+    <p>ここから送った内容は、議会事務局ではなく、このサイトの運営者に届きます。議会に正式な意見を出すときは、請願・陳情の手続きをご利用ください。</p>
+    <a class="pbtn" href={SITE.questionFormUrl}>お問い合わせフォームを開く</a>
+    <p class="note" style="margin-top:12px">用件（質問・意見／事実の誤りの指摘／反論の掲載／投稿の削除・訂正／議員の方から／取材・寄稿／その他）を選んでください。事実の誤りは48時間以内に確かめ、それ以外は1週間以内を目安にお返事します。メールでも受け付けます：{SITE.contactEmail}</p>
+  </article>
+</Base>

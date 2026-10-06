@@ -1,0 +1,13 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config/site';
+---
+<Base title="ページが見つかりません" noindex>
+  <article class="wrap">
+    <div class="futasuji" style="margin-top:28px"></div>
+    <h1 class="title">ページが見つかりません</h1>
+    <p><a href={u('/')}>トップへ</a>／<a href={u('/teisu/')}>議員定数の特集へ</a></p>
+    <p>大山町議会の公式サイトをお探しの方は、<a href={SITE.officialGikaiUrl}>こちら（daisen.jp/gikai）</a>へ。</p>
+  </article>
+</Base>
