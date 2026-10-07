@@ -278,3 +278,4 @@ h2.sec::before { content: ""; display: block; height: 6px; margin-bottom: 12px; 
 .seikyu .note { margin: 8px 0 0; }
 .seikyu .law { font-size: 14px; color: var(--usuzumi); margin: 6px 0 0; }
 .feature.mame { border-width: 1px; }
+.feature .stage { display: inline-block; margin-left: 8px; font-size: 14px; font-weight: 700; background: var(--kairan); padding: 2px 8px; vertical-align: top; }

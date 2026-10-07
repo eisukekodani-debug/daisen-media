@@ -14,10 +14,28 @@ import { SITE } from '../config/site';
       </div>
     </section>
 
+    <h2 class="sec">採決までの流れ</h2>
+    <ol class="nagare">
+      <li class="gikai"><span class="who">議会</span><b>委員会で審査</b><span class="when">定例会の会期中</span></li>
+      <li><span class="who">このサイト</span><b>解説を公開</b><span class="when">採決のおよそ1週間前をめどに、賛成・反対の両方の立場から</span></li>
+      <li><span class="who">町民</span><b>声を寄せる</b><span class="when">解説の公開から、採決の日まで</span></li>
+      <li><span class="who">このサイト</span><b>運営者の考えを載せる</b><span class="when">採決の日までに、運営者自身の立場と考えを</span></li>
+      <li class="gikai"><span class="who">議会</span><b>本会議で採決</b><span class="when">解説と町民の声がそろった状態で、採決の日を迎えます</span></li>
+      <li><span class="who">このサイト</span><b>結果を並べる</b><span class="when">議会の議決と町民の声を並べてお知らせします</span></li>
+    </ol>
+    <p class="note">2027年3月議会から本格的に始めます。</p>
+
+    <h2 class="sec">お約束</h2>
+    <ul class="yakusoku-list">
+      <li><span class="mk">1</span>基本は匿名で書けます。実名も大歓迎です。名前を出すかどうかは、あなたが選べます。</li>
+      <li><span class="mk">2</span>誹謗中傷、事実と違う内容、議案の趣旨に合わない内容は、運営者の判断で削除します。</li>
+    </ul>
+    <p class="note">くわしくは<a href={u('/rules/')}>お約束と投稿のルール</a>をご覧ください。</p>
+
     <p class="kicker">いま読める記事</p>
     <a class="feature" href={u('/teisu/')}>
       <div class="futasuji"></div>
-      <span class="fuda">第1号</span>
+      <span class="fuda">第1号</span><span class="stage">まだ議案ではありません</span>
       <span class="t">大山町の議員定数　16人・14人・もっと少なく――3つの考え方</span>
       <span class="nums" aria-label="いまの定数16人、直接請求の案は14人">
         <span><span class="n">16<small>人</small></span><span class="cap">いまの定数</span></span>
@@ -26,8 +44,8 @@ import { SITE } from '../config/site';
       </span>
       <ul class="digest">
         <li>定数は2013年から16人のまま。その間に、町の人口は約2割減りました。</li>
-        <li>14人にする条例の改正を求める直接請求を、10月13日に申請します。</li>
-        <li>16人を維持する・14人にする・もっと少なく、の3つの考え方を同じ重さで整理しました。</li>
+        <li>14人にする条例の改正を求める直接請求を、10月13日に申請します。署名が有権者の50分の1以上集まると、町長が議会に条例案を出し、そこで初めて議案になります。</li>
+        <li>16人を維持する・14人にする・もっと少なく、の3つの考え方を同じ重さで整理しました。運営者は、この直接請求の代表者です。</li>
       </ul>
       <span class="readmore">続きを読む →</span>
     </a>
@@ -40,24 +58,6 @@ import { SITE } from '../config/site';
       <span>条例の請求から、議会の解散、町長のリコールまで。署名で町を動かせる6つの仕組みを紹介します。</span>
       <span class="readmore">読む →</span>
     </a>
-
-    <h2 class="sec">採決までの流れ</h2>
-    <ol class="nagare">
-      <li class="gikai"><span class="who">議会</span><b>委員会で審査</b><span class="when">定例会の会期中</span></li>
-      <li><span class="who">このサイト</span><b>解説を公開</b><span class="when">採決のおよそ1週間前をめどに、賛成・反対の両方の立場から</span></li>
-      <li><span class="who">町民</span><b>声を寄せる</b><span class="when">解説の公開から、採決の日まで</span></li>
-      <li><span class="who">このサイト</span><b>運営者の考えを載せる</b><span class="when">採決の日までに、運営者自身の立場と考えを</span></li>
-      <li class="gikai"><span class="who">議会</span><b>本会議で採決</b><span class="when">解説と町民の声がそろった状態で、採決の日を迎えます</span></li>
-      <li><span class="who">このサイト</span><b>結果を並べる</b><span class="when">議会の議決と町民の声を並べてお知らせします</span></li>
-    </ol>
-    <p class="note">2027年3月議会から本格的に始めます。第1号の議員定数は、運営者が直接請求の代表者です。解説では、3つの考え方を同じ重さで書いています。</p>
-
-    <h2 class="sec">お約束</h2>
-    <ul class="yakusoku-list">
-      <li><span class="mk">1</span>基本は匿名で書けます。実名も大歓迎です。名前を出すかどうかは、あなたが選べます。</li>
-      <li><span class="mk">2</span>誹謗中傷、事実と違う内容、議案の趣旨に合わない内容は、運営者の判断で削除します。</li>
-    </ul>
-    <p class="note">くわしくは<a href={u('/rules/')}>お約束と投稿のルール</a>をご覧ください。</p>
 
     <h2 class="sec">このサイトについて</h2>
     <p>議会が発行する公式の「議会だより だいせん」を、かってに補う位置づけのサイトです。紙面では書ききれない議案の論点を、採決の前に掘り下げます。運営の考え方は<a href={u('/policy/')}>運営方針</a>に、運営者のことは<a href={u('/about/')}>運営者について</a>に書いています。</p>
