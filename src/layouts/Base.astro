@@ -114,12 +114,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <nav class="menu" id="menu" aria-label="メニュー">
     <ul>
       <li><button type="button" class="js-big">文字を大きくする</button></li>
-      <li><a href={u('/gian/')}>議案の深掘り</a></li>
-      <li><a href={u('/mame/')}>議会の豆知識</a></li>
-      <li><a href={u('/mame/kotoba/')}>議会のことば</a></li>
-      <li><a href={u('/about/')}>運営者について</a></li>
-      <li><a href={u('/policy/')}>運営方針</a></li>
-      <li><a href={u('/rules/')}>お約束と投稿のルール</a></li>
+      <li><a href={u('/#nagare')}>署名から議会までの流れ</a></li>
+      <li><a href={u('/teisu/')}>提案の中身（議員定数の記事）</a></li>
+      <li><a href={u('/about/')}>請求代表者について</a></li>
       <li><a href={u('/line/')}>お知らせを受け取る</a></li>
       <li><a href={u('/contact/')}>お問い合わせ</a></li>
     </ul>
@@ -133,7 +130,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <div class="futasuji"></div>
     <div class="inner">
       <nav aria-label="フッター">
-        <a href={u('/about/')}>運営者について</a>｜<a href={u('/policy/')}>運営方針</a>｜<a href={u('/rules/')}>お約束と投稿のルール</a>｜<a href={u('/privacy/')}>プライバシー</a>｜<a href={u('/contact/')}>お問い合わせ</a>｜<a href={u('/line/')}>お知らせを受け取る</a>
+        <a href={u('/about/')}>請求代表者について</a>｜<a href={u('/contact/')}>お問い合わせ</a>｜<a href={u('/line/')}>お知らせを受け取る</a>
       </nav>
       <p class="copy">© 2026 {SITE.name}</p>
     </div>

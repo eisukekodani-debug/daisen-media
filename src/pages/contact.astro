@@ -2,13 +2,13 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../config/site';
 ---
-<Base title="お問い合わせ" description="このサイトへのお問い合わせ。公式サイトではありません。">
+<Base title="お問い合わせ" description="署名活動へのお問い合わせ。公式サイトではありません。">
   <article class="wrap">
     <div class="futasuji" style="margin-top:28px"></div>
     <h1 class="title">お問い合わせ</h1>
-    <p>ここから送った内容は、議会事務局ではなく、このサイトの運営者に届きます。議会に正式な意見を出すときは、請願・陳情の手続きをご利用ください。</p>
-    <p>大山町議会事務局では、このサイトについてはお答えできません。議会の公式な情報は、<a href={SITE.officialGikaiUrl}>大山町議会のページ</a>をご覧ください。</p>
-    <a class="pbtn" href={SITE.questionFormUrl}>フォームを開く</a>
-    <p class="note" style="margin-top:12px">記事へのご意見は、フォームでテーマを選んで送ってください。それ以外のことは、テーマで「その他」を選んでください（すぐにはサイトに載せません）。返事が必要なお問い合わせは、メールでお送りください：{SITE.contactEmail}</p>
+    <p>署名活動や説明会についてのお問い合わせは、メールでお願いします。請求代表者の{SITE.operator}に届きます。</p>
+    <a class="pbtn" href={`mailto:${SITE.contactEmail}`}>メールを送る</a>
+    <p class="note" style="margin-top:12px">メールアドレス：{SITE.contactEmail}</p>
+    <p>大山町議会事務局では、この署名活動についてはお答えできません。議会の公式な情報は、<a href={SITE.officialGikaiUrl}>大山町議会のページ</a>をご覧ください。</p>
   </article>
 </Base>
