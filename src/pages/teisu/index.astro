@@ -143,7 +143,7 @@ const kennai = [
       </div>
     </details>
 
-    <details class="fold" open>
+    <details class="fold">
       <summary>3つの考え方</summary>
       <div class="body">
         <p>並べる順番は、数の多い順です。どれが正しいかを示す順ではありません。</p>
@@ -234,7 +234,7 @@ const kennai = [
       </div>
     </details>
 
-    <details class="fold" open>
+    <details class="fold">
       <summary>県内・全国の町と比べると</summary>
       <div class="body">
         <p>県内の町村で、定数16人は大山町と琴浦町だけです。この10年ほどで、8つの町が定数を見直しました（若桜・智頭・八頭・三朝・北栄・伯耆・日南・江府）。</p>
@@ -293,8 +293,10 @@ const kennai = [
 
     <section class="iken" aria-label="私はこう見る">
       <div class="obi"><b>私はこう見る</b><span>ここからは小谷英介の意見です</span></div>
-      <div class="ikenbody">
-        <h3>議員定数14人を提案する理由</h3>
+      <div class="sign top"><img class="face" src={u('/kodani.jpg')} alt="" width="44" height="44" /><span>{SITE.operator}（{SITE.operatorTitle}）</span></div>
+      <details class="ikenfold">
+        <summary>議員定数14人を提案する理由</summary>
+        <div class="ikenbody">
         <p>私は、大山町議会の議員定数を16人から14人に減らすよう、住民による直接請求という仕組みを使って提案しています。</p>
         <p>議員の定数に正解はありません。そのことを大前提としたうえで、人口が減り、テクノロジーが暮らしや仕事のあり方を変えつつあるいま、16人がこの先もずっと必要だとは、私は考えていません。</p>
         <p>実際、いまの議会は、議員1人が辞職したあとの15人で運営されています。</p>
@@ -304,11 +306,11 @@ const kennai = [
         <p>そして、これは数だけの問題ではありません。県内でも、北栄町と伯耆町は定数を減らした翌年の町議選が無投票になりました。大切なのは、議会を担う人が地域から自然に生まれてくる流れを、どうつくるかです。</p>
         <p>この10年、地域自主組織や、住民が町の総合計画を話し合った「だいせん未来会議」で町のことを考え、動いてきた人たちの中から、議員になった人が何人も出ています。私自身も、だいせん未来会議に参加していた一人です。</p>
         <p>その流れを、もう一段広げたい。このサイトは、そのための最初の一歩でもあります。</p>
-        <div class="sign"><img class="face" src={u('/kodani.jpg')} alt="" width="44" height="44" /><span>{SITE.operator}（{SITE.operatorTitle}）</span></div>
-      </div>
+        </div>
+      </details>
     </section>
 
-    <details class="fold" open>
+    <details class="fold">
       <summary>元の資料</summary>
       <div class="body">
         <ul class="sources">
@@ -336,7 +338,5 @@ const kennai = [
       <p class="yakusoku">名前もログインもいりません。</p>
     </section>
 
-    <h2 class="sec">訂正と更新の記録</h2>
-    <p class="note">まだ訂正はありません。誤りに気づいたら、<a href={u('/contact/')}>お問い合わせ</a>からお知らせください。</p>
   </article>
 </Base>

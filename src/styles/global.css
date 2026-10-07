@@ -315,3 +315,10 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .kotoba dt small { font-family: var(--gothic); font-weight: 700; font-size: 13px; color: var(--usuzumi); margin-left: 8px; }
 .kotoba dd { margin: 4px 0 0; line-height: 1.8; }
 .site-footer .copy { margin: 12px 0 0; font-size: 13px; color: var(--usuzumi); }
+.iken .sign.top { border-top: 0; padding: 12px 16px; border-bottom: 1px solid var(--kei); }
+.iken .sign.top .face { width: 56px; height: 56px; }
+.ikenfold > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 16px; font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.12); line-height: 1.45; }
+.ikenfold > summary::-webkit-details-marker { display: none; }
+.ikenfold > summary::after { content: "読む ＋"; font: 700 15px var(--gothic); white-space: nowrap; }
+.ikenfold[open] > summary::after { content: "閉じる －"; }
+.ikenfold .ikenbody { padding-top: 0; }
