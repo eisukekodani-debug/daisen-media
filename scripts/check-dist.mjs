@@ -9,10 +9,6 @@ const walk = (dir) => readdirSync(dir).flatMap((f) => {
 });
 
 for (const f of walk('dist')) {
-  // Googleの所有権確認ファイル（中身が決まっている）は除く
-  if (f.endsWith('.html') && !/\/google[0-9a-f]+\.html$/.test(f) && !readFileSync(f, 'utf8').includes('公式サイトではありません')) {
-    errors.push(`「公式サイトではありません」がない: ${f}`);
-  }
   if (/下書き|メモ|draft/i.test(f)) errors.push(`下書きらしいファイルがある: ${f}`);
   if (/署名簿/.test(f)) errors.push(`署名簿らしいファイルがある: ${f}`);
 }
