@@ -323,3 +323,4 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .ikenfold > summary::after { content: "読む ＋"; font: 700 15px var(--gothic); white-space: nowrap; }
 .ikenfold[open] > summary::after { content: "閉じる －"; }
 .ikenfold .ikenbody { padding-top: 0; }
+.deck { font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.05); color: var(--usuzumi); margin: -2px 0 12px; }
