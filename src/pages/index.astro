@@ -6,35 +6,56 @@ import { SITE } from '../config/site';
 <Base>
   <div class="wrap">
     <section class="hero">
-      <p>{SITE.description}</p>
+      <p class="catch">採決の日を、<br />町のみんなで迎えるために。</p>
+      <p>大山町議会で審議される注目の議案を、採決のおよそ1週間前までに、賛成・反対の両方の理由から解説します。</p>
+      <div class="who">
+        <div><b>町民のみなさん</b>何が決まるのかを知り、賛否とその理由を寄せられます。</div>
+        <div><b>議員のみなさん</b>町民がどう読み、どう考えたかを、採決の前に確かめられます。</div>
+      </div>
     </section>
 
+    <p class="kicker">いま読める記事</p>
     <a class="feature" href={u('/teisu/')}>
       <div class="futasuji"></div>
       <span class="fuda">第1号</span>
       <span class="t">大山町の議員定数　16人・14人・もっと少なく――3つの考え方</span>
-      <span>議員の数を16人から14人にする直接請求が、2026年10月に始まります。3つの考え方を同じ重さで整理しました。</span>
+      <span class="nums" aria-label="いまの定数16人、直接請求の案は14人">
+        <span><span class="n">16<small>人</small></span><span class="cap">いまの定数</span></span>
+        <span class="arrow" aria-hidden="true">→</span>
+        <span><span class="n">14<small>人</small></span><span class="cap">直接請求の案</span></span>
+      </span>
+      <ul class="digest">
+        <li>定数は2013年から16人のまま。その間に、町の人口は約2割減りました。</li>
+        <li>14人にする条例の改正を求める直接請求を、10月13日に申請します。</li>
+        <li>16人を維持する・14人にする・もっと少なく、の3つの考え方を同じ重さで整理しました。</li>
+      </ul>
+      <span class="readmore">続きを読む →</span>
     </a>
 
-    <h2 class="sec">このサイトでこれからやること</h2>
-    <ol class="steps">
-      <li><b>解説する</b><br />議会で決まる注目の議案を、賛成・反対の両方の理由から、わかりやすく解説します。</li>
-      <li><b>町民の声を集める</b><br />賛成・反対・まだ決められない、を押して、理由を一言書けるようにします。</li>
-      <li><b>採決の前に、全議員へ届ける</b><br />集まった声を、本会議の採決の前に、全議員に同じ内容で届けます。</li>
-      <li><b>議会の議決と並べる</b><br />議会の議決と町民の声を並べて公開します。</li>
+    <h2 class="sec">採決までの流れ</h2>
+    <ol class="nagare">
+      <li class="gikai"><span class="who">議会</span><b>委員会で審査</b><span class="when">定例会の会期中</span></li>
+      <li><span class="who">このサイト</span><b>解説を公開</b><span class="when">委員会の審査から、およそ3日後</span></li>
+      <li><span class="who">町民</span><b>声を寄せる</b><span class="when">採決までの、およそ1週間</span></li>
+      <li class="gikai"><span class="who">議会</span><b>本会議で採決</b><span class="when">解説と町民の声がそろった状態で、採決の日を迎えます</span></li>
+      <li><span class="who">このサイト</span><b>結果を並べる</b><span class="when">議会の議決と町民の声を並べてお知らせします</span></li>
     </ol>
-    <p class="note">2027年3月議会から本格的に始めます。</p>
+    <p class="note">2027年3月議会から本格的に始めます。第1号の議員定数は、運営者が直接請求の代表者のため、賛否は集めず、解説と質問への回答に徹します。</p>
 
     <h2 class="sec">お約束</h2>
-    <p>このサイトで押したり書いたりしても、名前は残りません。運営者にも、誰が押したかは分かりません。載せる前に運営者が目を通し、載せなかった数と理由も公開します。<a href={u('/rules/')}>お約束と投稿のルール</a></p>
+    <ul class="yakusoku-list">
+      <li><span class="mk">1</span>基本は匿名で書けます。実名も大歓迎です。名前を出すかどうかは、あなたが選べます。</li>
+      <li><span class="mk">2</span>誹謗中傷、事実と違う内容、議案の趣旨に合わない内容は、運営者の判断で削除します。</li>
+    </ul>
+    <p class="note">くわしくは<a href={u('/rules/')}>お約束と投稿のルール</a>をご覧ください。</p>
 
     <h2 class="sec">このサイトについて</h2>
-    <p>議会だよりは全世帯に届く、議会の公式の記録です。このサイトは、1〜2本の議案を採決の前に深く掘り下げ、町民の声を集める場として、それを補います。運営の考え方は<a href={u('/policy/')}>運営方針</a>に、運営者のことは<a href={u('/about/')}>運営者について</a>に書いています。</p>
+    <p>議会が発行する公式の「議会だより だいせん」を、かってに補う位置づけのサイトです。紙面では書ききれない議案の論点を、採決の前に掘り下げます。運営の考え方は<a href={u('/policy/')}>運営方針</a>に、運営者のことは<a href={u('/about/')}>運営者について</a>に書いています。</p>
 
     <section class="kairan">
-      <h2>お知らせを受け取る</h2>
-      <p>受付の開始、声まとめの公開と採決の日、採決の結果をお知らせします（1回の議会で3通まで）。</p>
-      <a class="sbtn" href={u('/line/')}>お知らせ登録について</a>
+      <h2>LINEでお知らせを受け取る</h2>
+      <p>議案の解説と声の受付が始まったとき、採決の結果が出たときにお知らせします（1回の定例会で2〜3回）。LINEは準備中のため、当面は{SITE.operator}のInstagramとFacebookでお知らせします。</p>
+      <a class="sbtn" href={u('/line/')}>お知らせの受け取り方</a>
     </section>
   </div>
 </Base>
