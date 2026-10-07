@@ -4,20 +4,85 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>LINEで友だちに教える</title>
-<style>body{margin:0;padding:40px 20px;font-family:sans-serif;background:#FAF8F3;color:#222;text-align:center;line-height:1.7}a{display:inline-block;margin-top:16px;padding:14px 22px;background:#06C755;color:#fff;font-weight:700;text-decoration:none;border-radius:6px}</style>
+<title>友だちに教える</title>
+<style>
+body{margin:0;padding:32px 20px;font-family:sans-serif;background:#FAF8F3;color:#222;text-align:center;line-height:1.7}
+button{display:inline-block;margin-top:16px;padding:14px 22px;background:#06C755;color:#fff;font-size:16px;font-weight:700;border:0;border-radius:6px}
+#msg{min-height:1.7em}
+</style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js" charset="utf-8"></script>
 </head>
 <body>
-<p>LINEの送信画面を開いています…</p>
-<a id="go" href="#">開かないときはこちら</a>
+<p id="msg">送り先を選ぶ画面を開いています…</p>
+<button id="again" type="button" hidden>送り先を選ぶ</button>
 <script>
-var t = '大山町の議員の定数を減らそうと、町民の署名を集める取り組みが始まります。\n'
+var LIFF_ID = '2011919996-f2Q3Dkge';
+var FRIEND_URL = 'https://line.me/R/ti/p/@521zvpej';
+var TEXT = '大山町の議員の定数を減らそうと、町民の署名を集める取り組みが始まります。\n'
   + '署名はいつ・どこでできるのか、署名はどれくらい集まったのか、その後、議会でどう話し合われたのかまで、このLINEでお知らせしていきます。\n'
-  + 'ぜひ友だち追加して、最後まで見守ってください。\n'
-  + 'https://line.me/R/ti/p/@521zvpej';
-var url = 'https://line.me/R/share?text=' + encodeURIComponent(t);
-document.getElementById('go').href = url;
-location.replace(url);
+  + 'ぜひ友だち追加して、最後まで見守ってください。';
+
+var CARD = {
+  type: 'flex',
+  altText: '議員定数削減の署名活動｜LINEの友だち追加のご案内',
+  contents: {
+    type: 'bubble',
+    hero: {
+      type: 'image', url: 'https://katteni-dayori.com/share-card.png',
+      size: 'full', aspectRatio: '40:21', aspectMode: 'cover',
+      action: { type: 'uri', uri: FRIEND_URL }
+    },
+    body: {
+      type: 'box', layout: 'vertical', spacing: 'sm',
+      contents: [
+        { type: 'text', text: '議員定数削減の署名活動', weight: 'bold', size: 'lg', wrap: true },
+        { type: 'text', text: '署名の日程や集まり具合、議会での話し合いの結果を、LINEでお知らせします。', size: 'sm', color: '#555555', wrap: true }
+      ]
+    },
+    footer: {
+      type: 'box', layout: 'vertical',
+      contents: [
+        { type: 'button', style: 'primary', color: '#06C755',
+          action: { type: 'uri', label: '友だち追加する', uri: FRIEND_URL } }
+      ]
+    }
+  }
+};
+
+var msg = document.getElementById('msg');
+var again = document.getElementById('again');
+
+// LINEの外で開かれたときや、送り先を選ぶ機能が使えないときは、文面だけのシェアに切り替える
+function fallback() {
+  location.replace('https://line.me/R/share?text=' + encodeURIComponent(TEXT + '\n' + FRIEND_URL));
+}
+
+function pick() {
+  liff.shareTargetPicker([{ type: 'text', text: TEXT }, CARD], { isMultiple: true })
+    .then(function (res) {
+      if (res) {
+        msg.textContent = '送りました。ありがとうございます。';
+        setTimeout(function () { liff.closeWindow(); }, 800);
+      } else {
+        msg.textContent = '送り先を選ばずに閉じました。';
+        again.hidden = false;
+      }
+    })
+    .catch(function () {
+      msg.textContent = 'うまく開けませんでした。もう一度お試しください。';
+      again.hidden = false;
+    });
+}
+
+again.addEventListener('click', pick);
+
+liff.init({ liffId: LIFF_ID })
+  .then(function () {
+    if (!liff.isInClient() && !liff.isLoggedIn()) { fallback(); return; }
+    if (!liff.isApiAvailable('shareTargetPicker')) { fallback(); return; }
+    pick();
+  })
+  .catch(fallback);
 </script>
 </body>
 </html>
