@@ -10,5 +10,5 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'always',
-  integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
+  integrations: [sitemap({ filter: (page) => !page.includes('/404'), lastmod: new Date() })],
 });

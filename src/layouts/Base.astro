@@ -17,19 +17,45 @@ const globalNoindex = (import.meta.env.PUBLIC_NOINDEX ?? '1') !== '0';
 const ogImageUrl = new URL(u(ogImage), Astro.site).toString();
 const siteName = SITE.name;
 const homeUrl = new URL(u('/'), Astro.site).toString();
-const jsonld = article
-  ? {
-      '@context': 'https://schema.org', '@type': 'Article',
-      headline: title, datePublished: article.published, dateModified: article.modified ?? article.published,
-      author: { '@type': 'Person', name: SITE.operator, url: new URL(u('/about/'), Astro.site).toString() },
-      image: [ogImageUrl], publisher: { '@type': 'Person', name: SITE.operator },
-    }
-  : Astro.url.pathname === u('/')
-    ? { '@context': 'https://schema.org', '@type': 'WebSite', name: siteName, url: homeUrl, inLanguage: 'ja' }
-    : null;
+const operatorLd = {
+  '@type': 'Person', name: SITE.operator, url: new URL(u('/about/'), Astro.site).toString(),
+  sameAs: [SITE.instagramUrl, SITE.facebookUrl, SITE.lineUrl].filter(Boolean),
+};
+const isHome = Astro.url.pathname === u('/');
+const ld: any[] = [];
+if (isHome) {
+  ld.push({
+    '@context': 'https://schema.org', '@type': 'WebSite', name: siteName,
+    alternateName: ['勝手に議会だより', 'かってに議会便り', 'katteni-dayori'],
+    url: homeUrl, inLanguage: 'ja', description, publisher: operatorLd,
+  });
+}
+if (article) {
+  ld.push({
+    '@context': 'https://schema.org', '@type': 'Article',
+    headline: title, description, datePublished: article.published, dateModified: article.modified ?? article.published,
+    mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
+    author: operatorLd, publisher: operatorLd, image: [ogImageUrl], inLanguage: 'ja',
+  });
+}
+if (!isHome) {
+  const parts = Astro.url.pathname.replace(u('/'), '/').split('/').filter(Boolean);
+  const names: Record<string, string> = { gian: '議案の深掘り', mame: '議会の豆知識' };
+  const items = [{ name: siteName, url: homeUrl }];
+  let acc = '/';
+  parts.forEach((p, i) => {
+    acc += p + '/';
+    const last = i === parts.length - 1;
+    items.push({ name: last ? (title ?? p) : (names[p] ?? p), url: new URL(u(acc), Astro.site).toString() });
+  });
+  ld.push({
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: it.url })),
+  });
+}
 const fullTitle = title
   ? `${title}｜${SITE.name}`
-  : `${SITE.name}｜鳥取県大山町の議案を賛成・反対の両方から`;
+  : `${SITE.name}｜大山町議会の議案を、賛成・反対の両方から解説`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!doctype html>
@@ -53,10 +79,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:site_name" content={SITE.name} />
   <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+  <link rel="icon" href={u('/favicon-48.png')} type="image/png" sizes="48x48" />
+  <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet" />
-  {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+  {ld.map((jsonld) => <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />)}
   <script is:inline>
     try { if (localStorage.getItem('dm.big') === '1') document.documentElement.classList.add('big'); } catch (e) {}
   </script>
@@ -65,17 +93,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <div class="hikoshiki"><a href={u('/about/')}>{SITE.notOfficial}</a></div>
   <header class="site-header">
     <div class="head-row">
-      <a class="logo" href={u('/')} aria-label={`${SITE.name}（トップページへ）`}>
-        <span class="logo-place">{SITE.place}</span>
-        <span class="logo-row"><span class="logo-katte">かってに</span><span class="logo-main">議会だより</span></span>
-      </a>
+      {isHome ? (
+        <h1 class="logo-h1"><a class="logo" href={u('/')}>
+          <span class="logo-place">{SITE.place}</span>
+          <span class="logo-row"><span class="logo-katte">かってに</span><span class="logo-main">議会だより</span></span>
+        </a></h1>
+      ) : (
+        <a class="logo" href={u('/')} aria-label={`${SITE.name}（トップページへ）`}>
+          <span class="logo-place">{SITE.place}</span>
+          <span class="logo-row"><span class="logo-katte">かってに</span><span class="logo-main">議会だより</span></span>
+        </a>
+      )}
       <div class="head-btns">
         <button type="button" class="hbtn js-big" data-off="大きく" data-on="標準に" aria-label="文字を大きくする"><span class="ic" aria-hidden="true">文字</span><span class="lb">大きく</span></button>
         <button type="button" class="hbtn" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="ic" aria-hidden="true">≡</span><span class="lb">メニュー</span></button>
       </div>
     </div>
     <div class="futasuji"></div>
-    {!hideSubtitle && <p class="fukudai">{SITE.subtitle}</p>}
+    {!hideSubtitle && <p class="fukudai">{SITE.subtitle.split('、').map((part, i, arr) => <span class="nw">{part}{i < arr.length - 1 ? '、' : ''}</span>)}</p>}
   </header>
   <nav class="menu" id="menu" aria-label="メニュー">
     <ul>
