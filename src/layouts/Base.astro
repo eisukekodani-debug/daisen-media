@@ -68,7 +68,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         <span class="logo-place">{SITE.place}</span>
         <span class="logo-row"><span class="logo-katte">かってに</span><span class="logo-main">議会だより</span></span>
       </a>
-      <button class="tbtn" id="menuBtn" aria-expanded="false" aria-controls="menu">≡ メニュー</button>
+      <div class="head-btns">
+        <button type="button" class="hbtn js-big" data-off="大きく" data-on="標準に" aria-label="文字を大きくする"><span class="ic" aria-hidden="true">文字</span><span class="lb">大きく</span></button>
+        <button type="button" class="hbtn" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="ic" aria-hidden="true">≡</span><span class="lb">メニュー</span></button>
+      </div>
     </div>
     <div class="futasuji"></div>
     <p class="fukudai">{SITE.subtitle}</p>
@@ -78,6 +81,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       <li><button type="button" class="js-big">文字を大きくする</button></li>
       <li><a href={u('/gian/')}>議案の深掘り</a></li>
       <li><a href={u('/mame/')}>議会の豆知識</a></li>
+      <li><a href={u('/mame/kotoba/')}>議会のことば</a></li>
       <li><a href={u('/about/')}>運営者について</a></li>
       <li><a href={u('/policy/')}>運営方針</a></li>
       <li><a href={u('/rules/')}>お約束と投稿のルール</a></li>
@@ -114,7 +118,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       });
       function label() {
         var on = document.documentElement.classList.contains('big');
-        document.querySelectorAll('.js-big').forEach(function (b) { b.textContent = on ? '文字を標準にする' : '文字を大きくする'; });
+        document.querySelectorAll('.js-big').forEach(function (b) {
+          if (b.dataset.off) {
+            b.querySelector('.lb').textContent = on ? b.dataset.on : b.dataset.off;
+            b.setAttribute('aria-label', on ? '文字を標準にする' : '文字を大きくする');
+          } else {
+            b.textContent = on ? '文字を標準にする' : '文字を大きくする';
+          }
+        });
       }
       document.querySelectorAll('.js-big').forEach(function (b) {
         b.addEventListener('click', function () {
