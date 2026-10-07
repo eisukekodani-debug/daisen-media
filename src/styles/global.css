@@ -164,7 +164,8 @@ table.data td.n { text-align: right; white-space: nowrap; }
 
 /* トップ */
 .hero { padding: 28px 0 6px; }
-.hero .catch { font-family: var(--mincho); font-weight: 800; font-size: calc(var(--base) * 1.55); line-height: 1.5; margin: 0 0 14px; word-break: auto-phrase; text-wrap: balance; }
+.hero .catch { font-family: var(--mincho); font-weight: 800; font-size: calc(var(--base) * 1.55); line-height: 1.5; margin: 6px 0 18px; text-align: center; word-break: keep-all; overflow-wrap: anywhere; }
+@media (min-width: 768px) { .hero .catch { font-size: calc(var(--base) * 1.9); } }
 .hero p { font-size: calc(var(--base) * 1.02); line-height: 1.85; margin: 0 0 10px; }
 .hero .who { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 16px 0 0; }
 @media (min-width: 600px) { .hero .who { grid-template-columns: 1fr 1fr; } }
