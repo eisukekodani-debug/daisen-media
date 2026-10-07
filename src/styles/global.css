@@ -279,3 +279,6 @@ h2.sec::before { content: ""; display: block; height: 6px; margin-bottom: 12px; 
 .seikyu .law { font-size: 14px; color: var(--usuzumi); margin: 6px 0 0; }
 .feature.mame { border-width: 1px; }
 .feature .stage { display: inline-block; margin-left: 8px; font-size: 14px; font-weight: 700; background: var(--kairan); padding: 2px 8px; vertical-align: top; }
+.lineqr { display: flex; gap: 14px; align-items: center; margin-top: 14px; }
+.lineqr img { width: 120px; height: 120px; background: #fff; flex-shrink: 0; }
+.lineqr p { margin: 0; font-size: 15px; line-height: 1.6; }

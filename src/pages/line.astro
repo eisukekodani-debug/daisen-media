@@ -1,17 +1,19 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import { SITE } from '../config/site';
 ---
-<Base title="お知らせを受け取る" description="議案の解説と声の受付の開始、採決の結果をお知らせします。公式サイトではありません。">
+<Base title="お知らせを受け取る" description="LINEで、議案の解説と声の受付の開始、採決の結果をお知らせします。公式サイトではありません。">
   <article class="wrap">
     <div class="futasuji" style="margin-top:28px"></div>
     <h1 class="title">お知らせを受け取る</h1>
     <section class="kairan">
-      <h2>当面は、InstagramとFacebookでお知らせします</h2>
-      <p>LINEでのお知らせは準備中です。それまでは、運営者・{SITE.operator}のInstagramとFacebookでお知らせします。</p>
-      <div class="sns">
-        <a href={SITE.instagramUrl}>Instagram</a>
-        <a href={SITE.facebookUrl}>Facebook</a>
+      <h2>LINEで友だち追加</h2>
+      <p>「かってに議会だより」のLINE公式アカウントを友だち追加すると、お知らせが届きます。</p>
+      <a class="pbtn" href={SITE.lineUrl}>LINEで友だち追加する</a>
+      <div class="lineqr">
+        <img src={u('/line-qr.svg')} alt="LINE友だち追加のQRコード" width="160" height="160" />
+        <p>パソコンで見ている方は、スマートフォンのLINEでこのQRコードを読み取ってください。<br />LINE ID：{SITE.lineId}</p>
       </div>
     </section>
     <h2 class="sec">届くもの</h2>
@@ -21,5 +23,11 @@ import { SITE } from '../config/site';
       <li><b>採決の結果</b></li>
       <li>そのほか、大事なお知らせ</li>
     </ol>
+    <h2 class="sec">InstagramとFacebook</h2>
+    <p>運営者・{SITE.operator}のInstagramとFacebookでも、お知らせしています。</p>
+    <div class="sns">
+      <a href={SITE.instagramUrl}>Instagram</a>
+      <a href={SITE.facebookUrl}>Facebook</a>
+    </div>
   </article>
 </Base>

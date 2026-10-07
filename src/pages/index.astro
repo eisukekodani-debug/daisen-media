@@ -64,8 +64,9 @@ import { SITE } from '../config/site';
 
     <section class="kairan">
       <h2>LINEでお知らせを受け取る</h2>
-      <p>議案の解説と声の受付が始まったとき、採決の結果が出たときにお知らせします（1回の定例会で2〜3回）。LINEは準備中のため、当面は{SITE.operator}のInstagramとFacebookでお知らせします。</p>
-      <a class="sbtn" href={u('/line/')}>お知らせの受け取り方</a>
+      <p>議案の解説と声の受付が始まったとき、採決の結果が出たときにお知らせします（1回の定例会で2〜3回）。</p>
+      <a class="pbtn" href={SITE.lineUrl}>LINEで友だち追加する</a>
+      <p style="margin:10px 0 0"><a href={u('/line/')}>QRコードとお知らせの内容</a></p>
     </section>
   </div>
 </Base>
