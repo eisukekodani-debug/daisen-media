@@ -1,0 +1,18 @@
+---
+import { u } from '../../lib/url';
+import Base from '../../layouts/Base.astro';
+---
+<Base title="議案の深掘り" description="大山町議会の注目の議案を、採決の前に賛成・反対の両方から掘り下げた記事の一覧です。公式サイトではありません。">
+  <div class="wrap">
+    <div class="futasuji" style="margin-top:28px"></div>
+    <h1 class="title">議案の深掘り</h1>
+    <p>大山町議会の注目の議案を、採決の前に、賛成・反対の両方の立場から掘り下げます。2026年12月議会から、議会ごとに記事を増やしていきます。</p>
+    <a class="feature" href={u('/teisu/')}>
+      <div class="futasuji"></div>
+      <span class="fuda">第1号</span><span class="stage">まだ議案ではありません</span>
+      <span class="t">大山町の議員定数　16人・14人・もっと少なく――3つの考え方</span>
+      <span>議員定数を16人から14人にする直接請求について、3つの考え方を、できるだけ同じ重さで整理しました。</span>
+      <span class="readmore">読む →</span>
+    </a>
+  </div>
+</Base>
