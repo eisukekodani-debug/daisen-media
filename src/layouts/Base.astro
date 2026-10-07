@@ -94,6 +94,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <div class="inner">
       <p><b>{SITE.name}</b><br />{SITE.place}議会の議案を、採決の前に賛成・反対の両方から解説します。</p>
       <p>このサイトは、{SITE.notOfficial}。運営：{SITE.operator}（{SITE.operatorTitle}）</p>
+      <p>AIの技術を使って情報を集め、編集し、人の手を加え、人の目を通して公開しています（<a href={u('/policy/#ai')}>AIの活用について</a>）。</p>
       <p>このサイトへのお問い合わせは運営者へ（<a href={u('/contact/')}>お問い合わせ</a>／{SITE.contactEmail}）。大山町議会事務局では、このサイトについてはお答えできません。議会の公式な情報は、<a href={SITE.officialGikaiUrl}>大山町議会のページ</a>をご覧ください。</p>
       <nav aria-label="フッター">
         <a href={u('/about/')}>運営者について</a>｜<a href={u('/policy/')}>運営方針</a>｜<a href={u('/rules/')}>お約束と投稿のルール</a>｜<a href={u('/privacy/')}>プライバシー</a>｜<a href={u('/contact/')}>お問い合わせ</a>｜<a href={u('/line/')}>お知らせを受け取る</a>
