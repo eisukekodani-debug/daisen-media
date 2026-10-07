@@ -145,7 +145,7 @@ table.data td.n { text-align: right; white-space: nowrap; }
 .iken .obi span { font-size: 14px; }
 .iken .ikenbody { padding: 14px 16px 16px; }
 .sign { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--usuzumi); border-top: 1px solid var(--kei); padding-top: 12px; line-height: 1.6; }
-.face { width: 44px; height: 44px; border-radius: 50%; background: #CFC8BA; flex-shrink: 0; display: grid; place-items: center; font-size: 11px; color: #fff; }
+.face { width: 44px; height: 44px; border-radius: 50%; background: #CFC8BA; flex-shrink: 0; object-fit: cover; display: block; }
 
 /* 元の資料 */
 .sources { list-style: none; padding: 0; margin: 0; font-size: 16px; line-height: 1.6; }
