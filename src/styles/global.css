@@ -353,5 +353,3 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .koe-text { font-family: "Klee One", var(--gothic); font-weight: 600; font-size: calc(var(--base) * 1.05); line-height: 1.8; margin: 8px 0 4px; }
 .koe-meta { margin: 0; font-size: 13px; color: var(--usuzumi); }
 
-.ikenbody .hosoku { margin: 30px 0 10px; padding-top: 18px; border-top: 1px solid var(--kei); font-family: var(--mincho); font-weight: 800; font-size: calc(var(--base) * 1.05); }
-.ikenbody .hosoku .lbl { display: block; font-family: var(--gothic, sans-serif); font-weight: 700; font-size: 13px; letter-spacing: .1em; color: var(--usuzumi); margin-bottom: 2px; }
