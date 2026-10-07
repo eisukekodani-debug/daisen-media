@@ -1,6 +1,6 @@
 // サイト全体の設定。名前とURLはここを直せば全ページに反映される
 export const SITE = {
-  name: 'かってに議会だより',
+  name: '議員定数削減の署名活動',
   subtitle: '選挙の日じゃなくても、町は動かせる。',
   place: '鳥取県大山町',
   description:

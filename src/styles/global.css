@@ -325,6 +325,8 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .ikenfold[open] > summary::after { content: "閉じる －"; }
 .ikenfold .ikenbody { padding-top: 0; }
 .deck { font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.05); color: var(--usuzumi); margin: -2px 0 12px; }
+.logo-main.kari { font-size: clamp(18px, 5.3vw, 24px); }
+@media (min-width: 700px) { .logo-main.kari { font-size: 34px; } }
 .logo-h1 { margin: 0; font-size: inherit; font-weight: inherit; }
 .fukudai .nw { display: inline-block; }
 

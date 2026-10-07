@@ -26,7 +26,6 @@ const ld: any[] = [];
 if (isHome) {
   ld.push({
     '@context': 'https://schema.org', '@type': 'WebSite', name: siteName,
-    alternateName: ['勝手に議会だより', 'かってに議会便り', 'katteni-dayori'],
     url: homeUrl, inLanguage: 'ja', description, publisher: operatorLd,
   });
 }
@@ -55,7 +54,7 @@ if (!isHome) {
 }
 const fullTitle = title
   ? `${title}｜${SITE.name}`
-  : `${SITE.name}｜大山町の議員定数を減らす署名活動を解説`;
+  : `${SITE.name}（鳥取県大山町）｜署名から議会までの流れと提案の中身`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!doctype html>
@@ -96,12 +95,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       {isHome ? (
         <h1 class="logo-h1"><a class="logo" href={u('/')}>
           <span class="logo-place">{SITE.place}</span>
-          <span class="logo-row"><span class="logo-katte">かってに</span><span class="logo-main">議会だより</span></span>
+          <span class="logo-row"><span class="logo-main kari">{SITE.name}</span></span>
         </a></h1>
       ) : (
         <a class="logo" href={u('/')} aria-label={`${SITE.name}（トップページへ）`}>
           <span class="logo-place">{SITE.place}</span>
-          <span class="logo-row"><span class="logo-katte">かってに</span><span class="logo-main">議会だより</span></span>
+          <span class="logo-row"><span class="logo-main kari">{SITE.name}</span></span>
         </a>
       )}
       <div class="head-btns">
