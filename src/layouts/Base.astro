@@ -83,7 +83,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=Klee+One:wght@600&display=swap" rel="stylesheet" />
   {ld.map((jsonld) => <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />)}
   <script is:inline>
     try { if (localStorage.getItem('dm.big') === '1') document.documentElement.classList.add('big'); } catch (e) {}

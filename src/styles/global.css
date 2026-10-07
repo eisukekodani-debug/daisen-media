@@ -327,3 +327,26 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .deck { font-family: var(--mincho); font-weight: 700; font-size: calc(var(--base) * 1.05); color: var(--usuzumi); margin: -2px 0 12px; }
 .logo-h1 { margin: 0; font-size: inherit; font-weight: inherit; }
 .fukudai .nw { display: inline-block; }
+
+/* みなさんの声 */
+.koe { margin: 8px 0 0; }
+.koe-lead { line-height: 1.8; }
+.koe-status { display: inline-block; background: var(--sumi); color: #fff; font-size: 13px; font-weight: 700; padding: 1px 8px; margin-right: 8px; vertical-align: .1em; }
+.koe-groups { display: grid; gap: 10px; }
+@media (min-width: 600px) { .koe-groups { grid-template-columns: 1fr 1fr; } }
+.koe-g { background: var(--men); border: 1px solid var(--kei); border-top-width: 4px; padding: 10px 14px 12px; }
+.koe-g.sansei { border-top-color: var(--sansei); }
+.koe-g.hantai { border-top-color: var(--hantai); }
+.koe-g.mada { border-top-color: var(--mada); }
+.koe-g h3 { display: flex; justify-content: space-between; align-items: center; margin: 0 0 6px; font-size: calc(var(--base) * 1); }
+.koe-tag { display: inline-block; color: #fff; font-size: 14px; font-weight: 700; padding: 2px 10px; border-radius: 2px; }
+.sansei .koe-tag, .koe-tag.sm { background: var(--sansei); }
+.hantai .koe-tag { background: var(--hantai); }
+.mada .koe-tag { background: var(--mada); }
+.koe-n { font-size: 14px; color: var(--usuzumi); }
+.koe-empty { margin: 0; font-size: 15px; color: var(--usuzumi); border: 1.5px dashed var(--kei); padding: 12px; text-align: center; line-height: 1.6; }
+.koe-sample { margin: 14px 0 0; }
+.koe-sample figcaption { font-size: 13px; font-weight: 700; color: var(--usuzumi); margin-bottom: 6px; }
+.koe-card { background: var(--kiri); border: 1.5px dashed var(--usuzumi); padding: 12px 14px; }
+.koe-text { font-family: "Klee One", var(--gothic); font-weight: 600; font-size: calc(var(--base) * 1.05); line-height: 1.8; margin: 8px 0 4px; }
+.koe-meta { margin: 0; font-size: 13px; color: var(--usuzumi); }
