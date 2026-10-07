@@ -42,28 +42,27 @@ const kennai = [
 
     <div class="kotowari">
       <b>おことわり</b>
-      解説では3つの考え方を、できるだけ同じ重さで書き、私の考えは「私はこう見る」の欄にだけ書いています。私は直接請求の代表者ですが、いただいた声は、賛成も反対も同じように受け止めます。
+      解説では3つの考え方を、できるだけ同じ重さで書き、私の考えは「私はこう見る」の欄にだけ書いています。私は、この直接請求の代表者です。
     </div>
 
     <section class="card" aria-label="1分でわかる">
       <div class="futasuji"></div>
       <span class="fuda">1分でわかる</span>
-      <p class="state"><b>あなたの声を受付中</b></p>
+      <p class="state"><b>署名の準備中</b></p>
       <ul class="sum">
         <li><span>いまの段階</span>まだ議案ではありません。署名が有権者の50分の1以上（248人以上）集まると、町長が議会に条例案を出し、そこで初めて議案になります</li>
         <li><span>何が起きる</span>議員の数を16人から14人にする案を、町民の署名で町に求める手続きが始まります（10月中旬に始まる予定）</li>
         <li><span>いつから</span>変わるのは次の町議選（2029年4月）から。いまの議員の任期には影響しません</li>
         <li><span>決めるのは</span>署名が集まったあと、町議会が賛否を決めます</li>
       </ul>
-      <a class="pbtn" href={SITE.questionFormUrl}>賛成・反対と理由を送る</a>
-      <p class="yakusoku">Googleのフォームが開きます。ログインはいりません。名前は、ニックネームやペンネームでもかまいません。<a href={u('/rules/')}>お約束と投稿のルール</a></p>
+      <a class="pbtn" href={u('/#nagare')}>署名から議会までの流れを見る</a>
+      <p class="yakusoku">このサイトでは署名を集めていません。署名は、正式な署名簿に、ご本人が自筆でお願いします。</p>
     </section>
 
     <section class="dekiru" aria-label="あなたにできること">
       <h2>あなたにできること</h2>
       <ol>
         <li><details><summary><b>読む</b></summary><div class="dk">このページで、3つの考え方と主な論点を確かめられます。わからない言葉は<a href={u('/mame/kotoba/')}>「議会のことば」</a>で説明しています。</div></details></li>
-        <li><details><summary><b>声を送る</b></summary><div class="dk">賛成か反対かを選び、よければ理由も書いてください。名前は、ニックネームやペンネームでも、実名でもかまいません（書かなくても送れます）。<a class="sbtn" href={SITE.questionFormUrl}>賛成・反対と理由を送る</a></div></details></li>
         <li><details><summary><b>署名のことを知る</b></summary><div class="dk">14人にすることに賛成の方は、署名で意思を示せます。署名を集める期間は10月19日ごろ〜11月18日ごろ（予定）で、正式な署名簿にご本人が自筆で書きます。このサイトでは署名を集めていません。説明会の日程は、決まりしだい、このページとLINEでお知らせします。</div></details></li>
         <li><details><summary><b>お知らせを受け取る</b></summary><div class="dk">説明会の日程や、議会の結果をLINEでお届けします。<a class="sbtn" href={SITE.lineUrl}>LINEで友だち追加する</a></div></details></li>
       </ol>
@@ -333,30 +332,10 @@ const kennai = [
       直接請求の説明会を、10月19日以降に大山・名和・中山で開きます。日程は決まり次第お知らせします。このサイトでは署名を集めていません。署名は、正式な署名簿に、ご本人が自筆でお願いします。
     </div>
 
-    <section class="koe" aria-label="みなさんの声">
-      <h2 class="sec">みなさんの声</h2>
-      <p class="koe-lead"><span class="koe-status">受付中</span>届いた声は、運営者が目を通したうえで、ここに順に載せていきます。名前は、書いていただいたもの（ニックネームやペンネームでもかまいません）で載せ、書かなければ匿名にします。</p>
-      <div class="koe-groups">
-        <section class="koe-g sansei">
-          <h3><span class="koe-tag">賛成</span><span class="koe-n">0件</span></h3>
-          <p class="koe-empty">まだ届いていません。あなたの声が、ここに載ります。</p>
-        </section>
-        <section class="koe-g hantai">
-          <h3><span class="koe-tag">反対</span><span class="koe-n">0件</span></h3>
-          <p class="koe-empty">まだ届いていません。あなたの声が、ここに載ります。</p>
-        </section>
-      </div>
-      <figure class="koe-sample" aria-label="載り方の見本">
-        <figcaption>載り方の見本（実際の声ではありません）</figcaption>
-        <div class="koe-card"><span class="koe-tag sm">賛成</span><p class="koe-text">ここに、いただいた理由がそのまま載ります。</p><p class="koe-meta">◯◯さん（ニックネーム）・10月◯日に届いた声</p></div>
-      </figure>
-    </section>
-
     <section class="kairan">
-      <h2>あなたはどう思う？</h2>
-      <p>賛成か反対かを選んで、よければその理由も書いてください。いただいた声は、基本的にこのサイトで紹介します。ただし、誹謗中傷、事実と違う内容、議案の趣旨に合わない内容は、運営者の判断で掲載しません。</p>
-      <a class="pbtn" href={SITE.questionFormUrl}>賛成・反対と理由を送る</a>
-      <p class="yakusoku">ログインはいりません。名前は、ニックネームやペンネームでも、実名でもかまいません。</p>
+      <h2>LINEでお知らせを受け取る</h2>
+      <p>説明会の日程や、署名の始まり・締め切りなど、節目ごとにお知らせします。</p>
+      <a class="pbtn" href={SITE.lineUrl}>LINEで友だち追加する</a>
     </section>
 
   </article>
