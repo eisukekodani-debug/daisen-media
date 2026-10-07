@@ -13,6 +13,6 @@ export const SITE = {
   lineUrl: '',
   instagramUrl: 'https://www.instagram.com/kodani.life/',
   facebookUrl: 'https://www.facebook.com/kodani.policy/',
-  youtubeUrl: 'https://www.youtube.com/@eisukekodani7885',
+  youtubeUrl: 'https://www.youtube.com/@kodani.policy',
   officialGikaiUrl: 'https://www.daisen.jp/gikai/',
 };
