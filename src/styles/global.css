@@ -309,3 +309,4 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .kotoba dt { font-family: var(--mincho); font-weight: 800; font-size: calc(var(--base) * 1.15); }
 .kotoba dt small { font-family: var(--gothic); font-weight: 700; font-size: 13px; color: var(--usuzumi); margin-left: 8px; }
 .kotoba dd { margin: 4px 0 0; line-height: 1.8; }
+.site-footer .copy { margin: 12px 0 0; font-size: 13px; color: var(--usuzumi); }
