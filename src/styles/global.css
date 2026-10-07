@@ -122,9 +122,11 @@ h3 { font-size: calc(var(--base) * 1.05); font-weight: 700; line-height: 1.5; ma
 .stances { display: grid; gap: 18px; margin: 8px 0 6px; }
 @media (min-width: 900px) { .stances.three { grid-template-columns: repeat(3, 1fr); } }
 .stance { border-top: 4px solid var(--sumi); padding-top: 8px; }
-.stance h3 { margin: 0 0 6px; font-family: var(--mincho); font-size: calc(var(--base) * 1.15); }
-.stance ul { margin: 0; padding-left: 1.2em; }
-.stance li { margin: 0 0 6px; }
+.stance h3 { margin: 0 0 8px; font-family: var(--mincho); font-size: calc(var(--base) * 1.2); }
+.stance h3 span { font-size: .75em; font-weight: 700; color: var(--usuzumi); margin-left: .3em; }
+.stance ul { list-style: none; margin: 0; padding: 0; }
+.stance li { background: var(--men); border: 1px solid var(--kei); padding: 10px 12px; margin: 0 0 8px; font-size: calc(var(--base) * .94); line-height: 1.7; }
+.stance .pt { display: block; font-family: var(--mincho); font-size: calc(var(--base) * 1.02); margin-bottom: 2px; }
 
 /* 検証 */
 .kensho { counter-reset: k; list-style: none; padding: 0; margin: 0; }
