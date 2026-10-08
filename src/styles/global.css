@@ -353,3 +353,7 @@ html.big .hbtn.js-big { background: var(--sumi); color: #fff; }
 .koe-text { font-family: "Klee One", var(--gothic); font-weight: 600; font-size: calc(var(--base) * 1.05); line-height: 1.8; margin: 8px 0 4px; }
 .koe-meta { margin: 0; font-size: 13px; color: var(--usuzumi); }
 
+.shomen { background: #fff; border: 1px solid var(--kei); padding: 14px 16px 6px; margin: 10px 0 8px; }
+.shomen p { text-indent: 1em; margin: 0 0 10px; }
+.shomen .shomen-t { text-indent: 0; font-weight: 700; text-align: center; }
+.shomen .shomen-c { text-indent: 0; text-align: center; letter-spacing: .5em; }
