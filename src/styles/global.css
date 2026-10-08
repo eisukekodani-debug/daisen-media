@@ -140,7 +140,7 @@ table.data th, table.data td { border-bottom: 1px solid var(--kei); padding: 8px
 table.data th { font-weight: 700; }
 table.data td.n { text-align: right; white-space: nowrap; }
 
-/* 私はこう見る（意見の欄） */
+/* 私はこう考える（意見の欄） */
 .iken { background: var(--men); border: 2px solid var(--sumi); margin: 28px 0; }
 .iken .obi { background: var(--sumi); color: #fff; padding: 9px 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .iken .obi b { font-family: var(--mincho); font-weight: 700; font-size: 20px; }
