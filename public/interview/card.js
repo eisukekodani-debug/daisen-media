@@ -7,10 +7,17 @@ var THEMES = {
 };
 
 function wrap(ctx, text, width) {
-  // 単語のまとまりで改行する（使えない環境では1文字ずつ）
-  var parts = window.Intl && Intl.Segmenter
+  // 文節に近いまとまりで改行する。ひらがな・小さい字・句読点は前の語にくっつけ、
+  // 漢字・カタカナの頭か、読点のあとでだけ区切る（使えない環境では1文字ずつ）
+  var segs = window.Intl && Intl.Segmenter
     ? Array.from(new Intl.Segmenter('ja', { granularity: 'word' }).segment(text), function (s) { return s.segment; })
     : text.split('');
+  var parts = [];
+  segs.forEach(function (g) {
+    var prev = parts[parts.length - 1];
+    if (prev && /^[ぁ-ゖー、。」』）！？・]/.test(g) && !/[、。]$/.test(prev)) parts[parts.length - 1] = prev + g;
+    else parts.push(g);
+  });
   var out = [], cur = '', last = '';
   parts.forEach(function (p) {
     if (ctx.measureText(cur + p).width <= width || !cur || /^[、。」』）！？ー]/.test(p)) { cur += p; last = p; return; }
@@ -26,7 +33,8 @@ function wrap(ctx, text, width) {
     if (ctx.measureText(row).width <= width * 1.04) { acc.push(row); return acc; }
     var c = '';
     row.split('').forEach(function (ch) {
-      if (ctx.measureText(c + ch).width > width && c) { acc.push(c); c = ch; } else c += ch;
+      // 小さい「っ」や句読点で行が始まらないようにする
+      if (ctx.measureText(c + ch).width > width && c && !/[っゃゅょぁぃぅぇぉッャュョー、。」』）]/.test(ch)) { acc.push(c); c = ch; } else c += ch;
     });
     if (c) acc.push(c);
     return acc;
@@ -120,21 +128,24 @@ function drawCard(ls, nick, sex, themeKey) {
     for (; ts > 26; ts -= 2) { x.font = '800 ' + ts + 'px ' + M; if (x.measureText(theme.title).width <= W - PAD - TX) break; }
     x.fillStyle = '#222'; x.fillText(theme.title, TX, AY + 64);
 
-    // ── 見出し「わたしの意見」と、その下に3行
-    var HY = 384;
+    // ── 見出し「わたしの意見」と、その下に3行。上の段と詰まらないよう、残りの高さの中で上下にゆとりを配る
+    var AREA_T = 400, AREA_B = 816, HEAD = 60, size = 44, gap = 22, blocks, rows;
+    for (; size >= 30; size -= 2) {
+      x.font = '700 ' + size + 'px ' + M;
+      blocks = ls.map(function (l) { return wrap(x, l, W - PAD * 2 - 48); });
+      rows = blocks.reduce(function (n, b) { return n + b.length; }, 0);
+      if (HEAD + rows * size * 1.5 + (blocks.length - 1) * gap * 2 <= AREA_B - AREA_T) break;
+    }
+    var spare = AREA_B - AREA_T - (HEAD + rows * size * 1.5 + (blocks.length - 1) * gap * 2);
+    if (spare > 0 && blocks.length > 1) { var add = Math.min(14, spare / 3 / (blocks.length - 1)); gap += add; spare -= add * 2 * (blocks.length - 1); }
+    var HY = AREA_T + Math.max(0, spare) * 0.45;
+
     x.fillStyle = '#3F6274'; x.font = '800 32px ' + M; x.fillText('わたしの意見', PAD, HY);
     var hw = x.measureText('わたしの意見').width;
     x.strokeStyle = '#3F6274'; x.lineWidth = 2;
     x.beginPath(); x.moveTo(PAD + hw + 20, HY + 18); x.lineTo(W - PAD, HY + 18); x.stroke();
 
-    var top = HY + 60, bottom = 816, size = 44, gap = 22, blocks, total;
-    for (; size >= 30; size -= 2) {
-      x.font = '700 ' + size + 'px ' + M;
-      blocks = ls.map(function (l) { return wrap(x, l, W - PAD * 2 - 48); });
-      total = blocks.reduce(function (n, b) { return n + b.length; }, 0) * size * 1.5 + (blocks.length - 1) * gap * 2;
-      if (total <= bottom - top) break;
-    }
-    var y = top;
+    var y = HY + HEAD;
     blocks.forEach(function (b, i) {
       x.fillStyle = '#3F6274'; x.fillRect(PAD, y + size * 0.45, 18, 18);
       x.fillStyle = '#222'; x.font = '700 ' + size + 'px ' + M;
