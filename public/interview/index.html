@@ -323,6 +323,32 @@ function wrap(ctx, text, width) {
   }, []);
 }
 
+// 大山の稜線（写真からなぞったもの。写真上の座標 1600×1600）
+var RIDGE = [[0,895],[60,880],[120,858],[170,850],[230,853],[290,862],[320,850],[360,835],[410,815],[450,795],[480,780],[530,770],[560,762],[620,758],[690,759],[730,766],[770,775],[820,786],[860,790],[900,780],[940,774],[1000,782],[1080,795],[1180,818],[1210,825],[1300,890],[1400,960],[1500,1030],[1600,1085]];
+
+function drawDaisen(x, bx, by, bw, bh) {
+  x.save();
+  x.beginPath(); x.rect(bx, by, bw, bh); x.clip();
+  var sky = x.createLinearGradient(0, by, 0, by + bh);
+  sky.addColorStop(0, '#CFE6EA'); sky.addColorStop(0.75, '#EEF3DF');
+  x.fillStyle = sky; x.fillRect(bx, by, bw, bh);
+  var sx = bw / 1600, top = by + 160, sy = 0.8;
+  // 山
+  x.beginPath(); x.moveTo(bx, by + bh);
+  RIDGE.forEach(function (p) { x.lineTo(bx + p[0] * sx, top + (p[1] - 758) * sy); });
+  x.lineTo(bx + bw, by + bh); x.closePath();
+  var mt = x.createLinearGradient(0, top, 0, by + bh);
+  mt.addColorStop(0, '#9AA7B9'); mt.addColorStop(1, '#6C7B90');
+  x.fillStyle = mt; x.fill();
+  // ふもとの森と田んぼ
+  x.beginPath(); x.moveTo(bx, by + bh);
+  [[0,286],[120,280],[260,289],[420,279],[560,287],[700,277],[840,286],[980,280]].forEach(function (p) { x.lineTo(bx + p[0], by + p[1]); });
+  x.lineTo(bx + bw, by + bh); x.closePath();
+  x.fillStyle = '#5F7653'; x.fill();
+  x.fillStyle = '#A7B783'; x.fillRect(bx, by + bh - 22, bw, 22);
+  x.restore();
+}
+
 function drawCard(ls) {
   var W = 1080, H = 1080, PAD = 90;
   var c = document.createElement('canvas');
@@ -340,16 +366,17 @@ function drawCard(ls) {
     var M = '"Shippori Mincho B1","Hiragino Mincho ProN",serif';
     var G = '"Zen Kaku Gothic New","Hiragino Sans",sans-serif';
     x.fillStyle = '#FAF8F3'; x.fillRect(0, 0, W, H);
+    drawDaisen(x, 50, 50, W - 100, 330);
     x.strokeStyle = '#222'; x.lineWidth = 3; x.strokeRect(40, 40, W - 80, H - 80);
     x.lineWidth = 1; x.strokeRect(50, 50, W - 100, H - 100);
 
     x.fillStyle = '#222'; x.textBaseline = 'top';
-    x.font = '800 60px ' + M; x.fillText('わたしの意見', PAD, 104);
-    x.fillStyle = '#595959'; x.font = '700 28px ' + G;
-    x.fillText('大山町の議会について、AIのインタビューに答えました', PAD, 186);
+    x.font = '800 60px ' + M; x.fillText('わたしの意見', PAD, 84);
+    x.fillStyle = '#4A5560'; x.font = '700 28px ' + G;
+    x.fillText('大山町の議会について、AIのインタビューに答えました', PAD, 160);
 
     // 3行の意見：枠に収まるまで文字を小さくする
-    var top = 262, bottom = 790, size = 50, blocks, total;
+    var top = 408, bottom = 795, size = 50, blocks, total;
     for (; size >= 34; size -= 2) {
       x.font = '700 ' + size + 'px ' + M;
       blocks = ls.map(function (l) { return wrap(x, l, W - PAD * 2 - 56); });
