@@ -15,7 +15,7 @@ function wrap(ctx, text, width) {
   parts.forEach(function (p) {
     if (ctx.measureText(cur + p).width <= width || !cur || /^[、。」』）！？ー]/.test(p)) { cur += p; last = p; return; }
     // 「と」「が」などの助詞で行が始まらないよう、直前の語ごと次の行へ送る
-    if (/^[とがのをにはもでへやだ]$/.test(p) && last && cur.length > last.length) {
+    if (/^(と|が|の|を|に|は|も|で|へ|や|だ|た|いる|いた|います|ます|です|ない)$/.test(p) && last && cur.length > last.length) {
       out.push(cur.slice(0, cur.length - last.length)); cur = last + p; last = p; return;
     }
     out.push(cur); cur = p; last = p;
@@ -37,8 +37,9 @@ function wrap(ctx, text, width) {
 function drawDaisen(x, bx, by, bw, bh, photo) {
   x.fillStyle = '#CFE6EA'; x.fillRect(bx, by, bw, bh);
   if (!photo || !photo.naturalWidth) return;
-  var sh = photo.naturalWidth * bh / bw; // 縦横の比率を保ち、上（空）を削る
-  x.drawImage(photo, 0, photo.naturalHeight - sh, photo.naturalWidth, sh, bx, by, bw, bh);
+  var sh = photo.naturalWidth * bh / bw; // 縦横の比率を保って切り出す
+  var sy = Math.min(photo.naturalHeight - sh, photo.naturalHeight * 0.2);
+  x.drawImage(photo, 0, sy, photo.naturalWidth, sh, bx, by, bw, bh);
 }
 
 function roundRect(x, l, t, w, h, r) {
@@ -98,56 +99,62 @@ function drawCard(ls, nick, sex, themeKey) {
     var M = '"Shippori Mincho B1","Hiragino Mincho ProN",serif';
     var G = '"Zen Kaku Gothic New","Hiragino Sans",sans-serif';
     x.fillStyle = '#FAF8F3'; x.fillRect(0, 0, W, H);
-    drawDaisen(x, 50, 50, W - 100, 250, photo);
+    // ── 上：写真（テーマの風景）
+    var BAND = 220;
+    drawDaisen(x, 50, 50, W - 100, BAND - 50, photo);
     x.strokeStyle = '#222'; x.lineWidth = 3; x.strokeRect(40, 40, W - 80, H - 80);
     x.lineWidth = 1; x.strokeRect(50, 50, W - 100, H - 100);
     x.textBaseline = 'top';
 
-    // 写真の右上：インタビューのテーマ（白い札）
-    var ts = 34;
-    for (; ts > 24; ts -= 2) { x.font = '800 ' + ts + 'px ' + M; if (x.measureText(theme.title).width <= 560) break; }
-    var tw = Math.max(x.measureText(theme.title).width, 200) + 44;
-    var tl = W - PAD + 14 - tw;
-    x.fillStyle = 'rgba(255,255,255,0.86)'; roundRect(x, tl, 74, tw, ts + 54, 10); x.fill();
-    x.fillStyle = '#4A5560'; x.font = '700 20px ' + G; x.fillText('インタビューのテーマ', tl + 22, 86);
-    x.fillStyle = '#222'; x.font = '800 ' + ts + 'px ' + M; x.fillText(theme.title, tl + 22, 114);
+    // ── 人：似顔絵を写真の下端に重ね、その下にお名前
+    var AR = 86, AX = PAD + 110, AY = BAND;
+    drawAvatar(x, AX, AY, AR, sex);
+    var nm = nick || '匿名', ns = 32;
+    for (; ns > 20; ns -= 2) { x.font = '800 ' + ns + 'px ' + G; if (x.measureText(nm).width <= 250) break; }
+    x.textAlign = 'center'; x.fillStyle = '#222'; x.fillText(nm, AX, AY + AR + 14); x.textAlign = 'left';
 
-    // 写真の下端に似顔絵を重ね、右に「わたしの意見」とお名前
-    drawAvatar(x, PAD + 66, 300, 66, sex);
-    var NX = PAD + 156;
-    x.fillStyle = '#3F6274'; x.font = '800 30px ' + M; x.fillText('わたしの意見', NX, 312);
-    var nm = nick || '匿名', ns = 46;
-    for (; ns > 26; ns -= 2) { x.font = '800 ' + ns + 'px ' + G; if (x.measureText(nm).width <= W - PAD - NX) break; }
-    x.fillStyle = '#222'; x.fillText(nm, NX, 352);
+    // ── 似顔絵の右：インタビューのテーマ
+    var TX = AX + AR + 64;
+    x.fillStyle = '#6B6B6B'; x.font = '700 22px ' + G; x.fillText('インタビューのテーマ', TX, AY + 30);
+    var ts = 40;
+    for (; ts > 26; ts -= 2) { x.font = '800 ' + ts + 'px ' + M; if (x.measureText(theme.title).width <= W - PAD - TX) break; }
+    x.fillStyle = '#222'; x.fillText(theme.title, TX, AY + 64);
 
-    // 3行の意見：枠に収まるまで文字を小さくする
-    var top = 452, bottom = 800, size = 48, blocks, total;
-    for (; size >= 32; size -= 2) {
+    // ── 見出し「わたしの意見」と、その下に3行
+    var HY = 384;
+    x.fillStyle = '#3F6274'; x.font = '800 32px ' + M; x.fillText('わたしの意見', PAD, HY);
+    var hw = x.measureText('わたしの意見').width;
+    x.strokeStyle = '#3F6274'; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(PAD + hw + 20, HY + 18); x.lineTo(W - PAD, HY + 18); x.stroke();
+
+    var top = HY + 60, bottom = 816, size = 44, gap = 22, blocks, total;
+    for (; size >= 30; size -= 2) {
       x.font = '700 ' + size + 'px ' + M;
-      blocks = ls.map(function (l) { return wrap(x, l, W - PAD * 2 - 56); });
-      total = blocks.reduce(function (n, b) { return n + b.length; }, 0) * size * 1.5 + (blocks.length - 1) * 34;
+      blocks = ls.map(function (l) { return wrap(x, l, W - PAD * 2 - 48); });
+      total = blocks.reduce(function (n, b) { return n + b.length; }, 0) * size * 1.5 + (blocks.length - 1) * gap * 2;
       if (total <= bottom - top) break;
     }
-    var y = top + Math.max(0, (bottom - top - total) / 2);
+    var y = top;
     blocks.forEach(function (b, i) {
-      x.fillStyle = '#3F6274'; x.fillRect(PAD, y + size * 0.42, 22, 22);
+      x.fillStyle = '#3F6274'; x.fillRect(PAD, y + size * 0.45, 18, 18);
       x.fillStyle = '#222'; x.font = '700 ' + size + 'px ' + M;
-      b.forEach(function (row) { x.fillText(row, PAD + 56, y); y += size * 1.5; });
+      b.forEach(function (row) { x.fillText(row, PAD + 48, y); y += size * 1.5; });
       if (i < blocks.length - 1) {
-        x.strokeStyle = '#D6D0C3'; x.lineWidth = 2;
-        x.beginPath(); x.moveTo(PAD, y + 12); x.lineTo(W - PAD, y + 12); x.stroke();
-        y += 34;
+        x.strokeStyle = '#DDD7CB'; x.lineWidth = 2;
+        x.beginPath(); x.moveTo(PAD + 48, y + gap - 8); x.lineTo(W - PAD, y + gap - 8); x.stroke();
+        y += gap * 2;
       }
     });
 
+    // ── 下：合言葉と公式LINE
     x.strokeStyle = '#222'; x.lineWidth = 2;
-    x.beginPath(); x.moveTo(PAD, 820); x.lineTo(W - PAD, 820); x.stroke();
-    x.fillStyle = '#595959'; x.font = '700 24px ' + G;
-    x.fillText('AIインタビューに答えて、まとめた意見です', PAD, 846);
-    x.fillStyle = '#222'; x.font = '800 34px ' + M; x.fillText(CATCH, PAD, 890);
-    x.fillStyle = '#595959'; x.font = '700 24px ' + G;
-    x.fillText('公式LINE「議員定数削減の署名活動」', PAD, 948);
-    if (qr.naturalWidth) { x.fillStyle = '#fff'; x.fillRect(W - PAD - 150, 838, 150, 150); x.drawImage(qr, W - PAD - 144, 844, 138, 138); }
+    x.beginPath(); x.moveTo(PAD, 836); x.lineTo(W - PAD, 836); x.stroke();
+    x.fillStyle = '#6B6B6B'; x.font = '700 22px ' + G;
+    x.fillText('AIインタビューに答えて、まとめた意見です', PAD, 860);
+    x.fillStyle = '#222'; x.font = '800 34px ' + M; x.fillText(CATCH, PAD, 898);
+    x.fillStyle = '#6B6B6B'; x.font = '700 22px ' + G;
+    x.fillText('公式LINE「議員定数削減の署名活動」', PAD, 952);
+    if (qr.naturalWidth) { x.fillStyle = '#fff'; x.fillRect(W - PAD - 140, 852, 140, 140); x.drawImage(qr, W - PAD - 134, 858, 128, 128); }
     return c.toDataURL('image/png');
   });
 }
