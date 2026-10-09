@@ -11,10 +11,14 @@ function wrap(ctx, text, width) {
   var parts = window.Intl && Intl.Segmenter
     ? Array.from(new Intl.Segmenter('ja', { granularity: 'word' }).segment(text), function (s) { return s.segment; })
     : text.split('');
-  var out = [], cur = '';
+  var out = [], cur = '', last = '';
   parts.forEach(function (p) {
-    if (ctx.measureText(cur + p).width <= width || !cur || /^[、。」』）！？ー]/.test(p)) { cur += p; return; }
-    out.push(cur); cur = p;
+    if (ctx.measureText(cur + p).width <= width || !cur || /^[、。」』）！？ー]/.test(p)) { cur += p; last = p; return; }
+    // 「と」「が」などの助詞で行が始まらないよう、直前の語ごと次の行へ送る
+    if (/^[とがのをにはもでへやだ]$/.test(p) && last && cur.length > last.length) {
+      out.push(cur.slice(0, cur.length - last.length)); cur = last + p; last = p; return;
+    }
+    out.push(cur); cur = p; last = p;
   });
   if (cur) out.push(cur);
   // 1語が長すぎて枠からはみ出す行は、1文字ずつ折り返す
@@ -32,7 +36,15 @@ function wrap(ctx, text, width) {
 // カード上部の大山（daisen.jpg：元写真の y=560〜1080 を切り抜いたもの）
 function drawDaisen(x, bx, by, bw, bh, photo) {
   x.fillStyle = '#CFE6EA'; x.fillRect(bx, by, bw, bh);
-  if (photo && photo.naturalWidth) x.drawImage(photo, bx, by, bw, bh);
+  if (!photo || !photo.naturalWidth) return;
+  var sh = photo.naturalWidth * bh / bw; // 縦横の比率を保ち、上（空）を削る
+  x.drawImage(photo, 0, photo.naturalHeight - sh, photo.naturalWidth, sh, bx, by, bw, bh);
+}
+
+function roundRect(x, l, t, w, h, r) {
+  x.beginPath();
+  x.moveTo(l + r, t); x.arcTo(l + w, t, l + w, t + h, r); x.arcTo(l + w, t + h, l, t + h, r);
+  x.arcTo(l, t + h, l, t, r); x.arcTo(l, t, l + w, t, r); x.closePath();
 }
 
 // カードの似顔絵（男性・女性・どちらでもない）。丸の中に、顔と肩だけの簡単な絵
@@ -62,7 +74,7 @@ function drawAvatar(x, cx, cy, r, sex) {
   x.strokeStyle = '#B5715A'; x.lineWidth = 2 * u; x.lineCap = 'round';
   x.beginPath(); x.arc(cx, cy + 4 * u, 6 * u, 0.2 * Math.PI, 0.8 * Math.PI); x.stroke();
   x.restore();
-  x.strokeStyle = '#FFFFFF'; x.lineWidth = 4; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.stroke();
+  x.strokeStyle = '#FFFFFF'; x.lineWidth = 6; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.stroke();
 }
 
 function drawCard(ls, nick, sex, themeKey) {
@@ -86,29 +98,31 @@ function drawCard(ls, nick, sex, themeKey) {
     var M = '"Shippori Mincho B1","Hiragino Mincho ProN",serif';
     var G = '"Zen Kaku Gothic New","Hiragino Sans",sans-serif';
     x.fillStyle = '#FAF8F3'; x.fillRect(0, 0, W, H);
-    drawDaisen(x, 50, 50, W - 100, 318, photo);
+    drawDaisen(x, 50, 50, W - 100, 250, photo);
     x.strokeStyle = '#222'; x.lineWidth = 3; x.strokeRect(40, 40, W - 80, H - 80);
     x.lineWidth = 1; x.strokeRect(50, 50, W - 100, H - 100);
+    x.textBaseline = 'top';
 
-    x.fillStyle = '#222'; x.textBaseline = 'top';
-    drawAvatar(x, PAD + 56, 128, 56, sex);
-    var NX = PAD + 132;
-    x.fillStyle = '#222'; x.font = '800 54px ' + M; x.fillText('わたしの意見', NX, 66);
-    var nm = nick || '匿名', ns = 34;
-    for (; ns > 22; ns -= 2) { x.font = '800 ' + ns + 'px ' + G; if (x.measureText(nm).width <= 330) break; }
-    x.fillStyle = '#2E3A44'; x.fillText(nm, NX, 134);
+    // 写真の右上：インタビューのテーマ（白い札）
+    var ts = 34;
+    for (; ts > 24; ts -= 2) { x.font = '800 ' + ts + 'px ' + M; if (x.measureText(theme.title).width <= 560) break; }
+    var tw = Math.max(x.measureText(theme.title).width, 200) + 44;
+    var tl = W - PAD + 14 - tw;
+    x.fillStyle = 'rgba(255,255,255,0.86)'; roundRect(x, tl, 74, tw, ts + 54, 10); x.fill();
+    x.fillStyle = '#4A5560'; x.font = '700 20px ' + G; x.fillText('インタビューのテーマ', tl + 22, 86);
+    x.fillStyle = '#222'; x.font = '800 ' + ts + 'px ' + M; x.fillText(theme.title, tl + 22, 114);
 
-    // 右上：インタビューのテーマ
-    x.textAlign = 'right';
-    x.fillStyle = '#3A4650'; x.font = '700 22px ' + G; x.fillText('インタビューのテーマ', W - PAD, 66);
-    var ts = 36;
-    for (; ts > 24; ts -= 2) { x.font = '800 ' + ts + 'px ' + M; if (x.measureText(theme.title).width <= 380) break; }
-    x.fillStyle = '#222'; x.fillText(theme.title, W - PAD, 98);
-    x.textAlign = 'left';
+    // 写真の下端に似顔絵を重ね、右に「わたしの意見」とお名前
+    drawAvatar(x, PAD + 66, 300, 66, sex);
+    var NX = PAD + 156;
+    x.fillStyle = '#3F6274'; x.font = '800 30px ' + M; x.fillText('わたしの意見', NX, 312);
+    var nm = nick || '匿名', ns = 46;
+    for (; ns > 26; ns -= 2) { x.font = '800 ' + ns + 'px ' + G; if (x.measureText(nm).width <= W - PAD - NX) break; }
+    x.fillStyle = '#222'; x.fillText(nm, NX, 352);
 
     // 3行の意見：枠に収まるまで文字を小さくする
-    var top = 396, bottom = 795, size = 50, blocks, total;
-    for (; size >= 34; size -= 2) {
+    var top = 452, bottom = 800, size = 48, blocks, total;
+    for (; size >= 32; size -= 2) {
       x.font = '700 ' + size + 'px ' + M;
       blocks = ls.map(function (l) { return wrap(x, l, W - PAD * 2 - 56); });
       total = blocks.reduce(function (n, b) { return n + b.length; }, 0) * size * 1.5 + (blocks.length - 1) * 34;
