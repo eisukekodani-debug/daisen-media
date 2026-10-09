@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>議会についてのAIインタビュー</title>
+<title>大山町議会についてのAIインタビュー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
@@ -57,8 +57,8 @@ textarea{width:100%;border:1px solid var(--waku);border-radius:4px;padding:10px;
 
 <!-- はじめの画面 -->
 <section id="s-intro">
-  <h1>議会について、<br>あなたの声を聞かせてください。</h1>
-  <p class="sub">AIによるインタビュー（5分ほど）</p>
+  <h1>大山町議会について、<br>あなたの声を聞かせてください。</h1>
+  <p class="sub">AIによるインタビュー</p>
 
   <div class="chui">
     <b>ご注意ください。これは署名ではありません。</b>
@@ -86,13 +86,13 @@ textarea{width:100%;border:1px solid var(--waku);border-radius:4px;padding:10px;
 <section id="s-chat" hidden>
   <div id="log" aria-live="polite"></div>
   <div class="input" id="inputbox">
-    <textarea id="t" rows="3" maxlength="300" placeholder="ここに書いてください（マイクで話してもOK）"></textarea>
+    <textarea id="t" rows="3" maxlength="300" placeholder="ここに書いてください"></textarea>
     <div class="row">
       <span class="count" id="left"></span>
       <button id="b-send" class="btn" type="button">送る</button>
     </div>
   </div>
-  <p style="margin-top:14px;text-align:center"><button id="b-end" class="link" type="button" hidden>ここで終えて、まとめる</button></p>
+  <button id="b-end" class="btn sub2" type="button" hidden>インタビューを終える</button>
 </section>
 
 <!-- まとめの確認 -->
@@ -173,7 +173,7 @@ var MOCK_REPLIES = [
 function mockApi(d) {
   return new Promise(function (ok) {
     setTimeout(function () {
-      if (d.action === 'start') ok({ sid: 'mock', reply: 'こんにちは。大山町の議会や町政について、5分ほどお話を聞かせてください。正解はありません。思ったことを、そのまま書いてください。マイクで話しても大丈夫です。\n\nまず、大山町の町政や議会のこと、ふだんどのくらい気にかけていますか？' });
+      if (d.action === 'start') ok({ sid: 'mock', reply: 'こんにちは。大山町の議会や町政について、お話を聞かせてください。正解はありません。思ったことを、そのまま書いてください。\n\nまず、大山町の町政や議会のこと、ふだんどのくらい気にかけていますか？' });
       else if (d.action === 'msg') { var i = Math.min(turn, MOCK_REPLIES.length) - 1; ok({ reply: MOCK_REPLIES[i], done: i === MOCK_REPLIES.length - 1, turn: turn, max: maxTurns }); }
       else if (d.action === 'summary') ok({ lines: ['議員の数より、地区に来て話してくれるかが大事。', '仕事を休めないことが、立候補のいちばんの壁だと思う。', '自分の集落に関わる話なら、もっと知りたい。'] });
       else ok({ ok: true });
@@ -207,7 +207,7 @@ $('b-start').addEventListener('click', function () {
 function addMsg(who, text) {
   var d = document.createElement('div');
   d.className = 'msg ' + who;
-  if (who === 'ai') { var s = document.createElement('span'); s.className = 'who'; s.textContent = 'AI'; d.appendChild(s); }
+  if (who === 'ai') { var s = document.createElement('span'); s.className = 'who'; s.textContent = '聞き手'; d.appendChild(s); }
   d.appendChild(document.createTextNode(text));
   $('log').appendChild(d);
   d.scrollIntoView({ block: 'end', behavior: 'smooth' });
@@ -224,7 +224,7 @@ function addWait() {
 }
 function updateLeft() {
   $('left').textContent = 'あと' + (maxTurns - turn) + '回まで話せます';
-  $('b-end').hidden = turn < 2;
+  $('b-end').hidden = !sid;
 }
 
 function send() {
@@ -259,6 +259,12 @@ $('b-send').addEventListener('click', send);
 
 $('b-end').addEventListener('click', function () {
   if (busy) return;
+  if (!turn) {
+    $('done-title').textContent = 'おつかれさまでした';
+    $('done-text').textContent = 'インタビューを終えました。回答は提出されていません。';
+    show('s-done');
+    return;
+  }
   addMsg('ai', 'お話を聞かせてくださり、ありがとうございました。いまのお話を、3行にまとめてみますね。');
   finishChat();
 });
