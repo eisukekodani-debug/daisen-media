@@ -202,7 +202,7 @@ var MOCK_REPLIES = [
 function mockApi(d) {
   return new Promise(function (ok) {
     setTimeout(function () {
-      if (d.action === 'start') ok({ sid: 'mock', reply: 'こんにちは。大山町の議会や町政について、お話を聞かせてください。正解はありません。思ったことを、そのまま書いてください。\n\nまず、大山町の町政や議会のこと、ふだんどのくらい気にかけていますか？' });
+      if (d.action === 'start') ok({ sid: 'mock', reply: 'こんにちは。大山町の議会について、あなたの考えを聞かせてください。正解はありません。\n\nさっそくですが、大山町議会の議員の数を、いまの16人から14人に減らそうという提案があります。あなたは、どう思いますか？' });
       else if (d.action === 'msg') { var i = Math.min(turn, MOCK_REPLIES.length) - 1; ok({ reply: MOCK_REPLIES[i], done: i === MOCK_REPLIES.length - 1, turn: turn, max: maxTurns }); }
       else if (d.action === 'summary') ok({ lines: ['議員の数より、地区に来て話してくれるかが大事。', '仕事を休めないことが、立候補のいちばんの壁だと思う。', '自分の集落に関わる話なら、もっと知りたい。'] });
       else ok({ ok: true });
