@@ -1,0 +1,58 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+---
+<Base title="AIインタビュー" description="大山町議会について、AIの聞き手があなたの考えを聞くインタビューです。答えた方の「意見カード」を紹介しています。">
+  <article class="wrap">
+    <div class="futasuji" style="margin-top:28px"></div>
+    <h1 class="title">AIインタビュー</h1>
+    <p>大山町議会について、AIの聞き手があなたの考えを聞きます。議員の定数のこと、議員のなり手のこと、町政への関心のこと。あなたの話に合わせて質問が進み、最後に、あなたの意見を3行の「意見カード」にまとめます。</p>
+    <div class="ai-chui">
+      <b>これは署名ではありません。</b>
+      署名ができるのは、紙の署名簿だけです。このインタビューは、署名とは別に、議会のあり方について町民の声を集めるための取り組みです。
+    </div>
+    <a class="pbtn" href={u('/interview/')}>インタビューに答える</a>
+
+    <h2 class="sec">みんなの意見カード</h2>
+    <p class="note">インタビューに答えて、公開に同意してくださった方の意見カードです。運営者が確かめてから載せています。</p>
+    <div id="cards" class="ai-cards"><p class="note">読み込んでいます…</p></div>
+    <p class="note" style="margin-top:20px"><a href={u('/interview/privacy/')}>回答の取り扱いについて</a></p>
+  </article>
+</Base>
+
+<style is:global>
+  .ai-chui { background: var(--kairan); padding: 14px 16px; margin: 16px 0 20px; }
+  .ai-chui b { display: block; }
+  .ai-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .ai-cards img { display: block; width: 100%; height: auto; border: 1px solid var(--kei); }
+</style>
+
+<script is:inline src="/interview/card.js"></script>
+<script is:inline>
+(function () {
+  var API_URL = 'https://script.google.com/macros/s/AKfycbyMaSq32OWSUC6uIiFBk8GZ2hnu4IiQbWJdZDxVHI2HRk_Ugtr2jZdMkEAZrzt9oRKr7Q/exec';
+  var box = document.getElementById('cards');
+  function note(text) {
+    box.textContent = '';
+    var p = document.createElement('p'); p.className = 'note'; p.textContent = text; box.appendChild(p);
+  }
+  fetch(API_URL + '?action=cards').then(function (r) { return r.json(); }).then(function (d) {
+    var cards = (d && d.cards) || [];
+    if (!cards.length) { note('まだ載っている意見カードはありません。'); return; }
+    box.textContent = '';
+    // 1枚ずつ順番に描く
+    cards.reduce(function (p, c) {
+      return p.then(function () {
+        return drawCard(c.lines, c.nick, c.sex).then(function (url) {
+          var img = new Image();
+          img.src = url; img.loading = 'lazy';
+          img.alt = c.nick + 'の意見：' + c.lines.join('／');
+          box.appendChild(img);
+        });
+      });
+    }, Promise.resolve());
+  }).catch(function () {
+    note('意見カードを読み込めませんでした。時間をおいて、もう一度開いてください。');
+  });
+})();
+</script>

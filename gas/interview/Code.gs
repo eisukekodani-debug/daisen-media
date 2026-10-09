@@ -123,7 +123,8 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+function doGet(e) {
+  if (e && e.parameter && e.parameter.action === 'cards') return json_({ cards: cards_() });
   return json_({ ok: true });
 }
 
@@ -211,8 +212,12 @@ function submit_(body) {
     state.turns,
     (state.covered || []).join(','),
     body.src === 'line' ? 'LINE' : 'ウェブ',
-    state.log.map(function (l) { return l.who + '：' + l.text; }).join('\n')
+    state.log.map(function (l) { return l.who + '：' + l.text; }).join('\n'),
+    body.publish ? (clean_(body.nick).slice(0, 12) || '匿名') : '',
+    body.publish ? ({ m: '男性', f: '女性' }[body.sex] || '') : '',
+    false
   ]);
+  if (body.publish) sheet.getRange(sheet.getLastRow(), 13).insertCheckboxes();
   CacheService.getScriptCache().remove(body.sid);
   return { ok: true };
 }
@@ -280,15 +285,41 @@ function clean_(s) {
   return String(s || '').replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, '').trim();
 }
 
+const HEADERS = ['日時', 'セッションID', '公開', 'まとめ1', 'まとめ2', 'まとめ3', '回答回数', '聞けたテーマ', '経路', '会話の記録', 'ニックネーム', '絵', '掲載'];
+
 function sheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
-    sh.appendRow(['日時', 'セッションID', '公開', 'まとめ1', 'まとめ2', 'まとめ3', '回答回数', '聞けたテーマ', '経路', '会話の記録']);
     sh.setFrozenRows(1);
   }
+  if (sh.getRange(1, HEADERS.length).getValue() !== HEADERS[HEADERS.length - 1]) {
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
   return sh;
+}
+
+/** サイトに載せるカード：「公開してよい」で、運営者が「掲載」にチェックを入れたものだけ。新しい順 */
+function cards_() {
+  const cache = CacheService.getScriptCache();
+  const hit = cache.get('cards');
+  if (hit) return JSON.parse(hit);
+  const sh = sheet_();
+  const n = sh.getLastRow() - 1;
+  const rows = n > 0 ? sh.getRange(2, 1, n, HEADERS.length).getValues() : [];
+  const out = rows
+    .filter(function (r) { return r[2] === '公開してよい' && r[12] === true; })
+    .map(function (r) {
+      return {
+        lines: [r[3], r[4], r[5]].map(String).filter(function (t) { return t; }),
+        nick: String(r[10] || '匿名'),
+        sex: r[11] === '男性' ? 'm' : r[11] === '女性' ? 'f' : ''
+      };
+    })
+    .reverse();
+  cache.put('cards', JSON.stringify(out), 300);
+  return out;
 }
 
 function json_(obj) {
